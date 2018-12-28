@@ -23,11 +23,11 @@ public class Merchant {
     long merchantId;
 
     String merchantName;
+
+    @Column(unique = true)
     String mid;
 
-    @ManyToOne
-    @JoinColumn
-    Vendor vendor;
+
 
     Date createdOn;
     String merchantAddress;

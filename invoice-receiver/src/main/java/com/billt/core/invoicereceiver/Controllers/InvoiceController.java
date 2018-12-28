@@ -1,8 +1,8 @@
 package com.billt.core.invoicereceiver.Controllers;
 
 
-import com.billt.core.billtcore.Model.invoiceReceiver.InvoiceRequestBean;
-import com.billt.core.billtcore.enums.invoiceReceiver.ValidationResults;
+import com.billt.core.invoicereceiver.Model.InvoiceRequestBean;
+import com.billt.core.invoicereceiver.enums.invoiceReceiver.ValidationResults;
 import com.billt.core.invoicereceiver.Service.IInvoiceService;
 import com.billt.core.invoicereceiver.utils.Response;
 import org.slf4j.Logger;

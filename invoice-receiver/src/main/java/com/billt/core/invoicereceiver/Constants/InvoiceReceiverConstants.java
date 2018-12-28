@@ -1,6 +1,4 @@
-package com.billt.core.billtcore.Constants;
-
-import java.util.regex.Pattern;
+package com.billt.core.invoicereceiver.Constants;
 
 public class InvoiceReceiverConstants {
 

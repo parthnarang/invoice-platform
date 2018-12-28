@@ -24,7 +24,6 @@
     <modules>
         <module>invoice-receiver</module>
         <module>notification-service</module>
-		<module>billt-core</module>
 		<module>common</module>
     </modules>
 

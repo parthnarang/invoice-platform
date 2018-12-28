@@ -1,14 +1,12 @@
-package com.billt.core.billtcore;
+package com.billt.core.datasourcebase;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-
-public class BilltCoreApplication {
+public class DataSourceBase {
 
     public static void main(String[] args) {
-        SpringApplication.run(BilltCoreApplication.class, args);
+        SpringApplication.run(DataSourceBase.class, args);
     }
 }

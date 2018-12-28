@@ -1,4 +1,4 @@
-package com.billt.core.billtcore.enums.invoiceReceiver;
+package com.billt.core.invoicereceiver.enums.invoiceReceiver;
 
 public enum ValidationResults {
 

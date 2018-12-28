@@ -1,11 +1,11 @@
-package com.billt.core.billtcore.Model.invoiceReceiver;
+package com.billt.core.invoicereceiver.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static com.billt.core.billtcore.Constants.InvoiceReceiverConstants.*;
+import static com.billt.core.invoicereceiver.Constants.InvoiceReceiverConstants.*;
 
 /**
  * @author parth narang
@@ -135,7 +135,6 @@ public class InvoiceRequestBean {
         this.mobileNo = request.getParameter(MOBILE_NO);
         this.email = request.getParameter(EMAIL);
         this.data = request.getParameter(DATA);
-
     }
 
 }

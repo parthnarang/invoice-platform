@@ -1,7 +1,7 @@
 package com.billt.core.invoicereceiver.Service.Impl;
 
-import com.billt.core.billtcore.Constants.InvoiceReceiverConstants;
-import com.billt.core.billtcore.Model.invoiceReceiver.InvoiceRequestBean;
+import com.billt.core.invoicereceiver.Constants.InvoiceReceiverConstants;
+import com.billt.core.invoicereceiver.Model.InvoiceRequestBean;
 import com.billt.core.invoicereceiver.Service.IValidationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

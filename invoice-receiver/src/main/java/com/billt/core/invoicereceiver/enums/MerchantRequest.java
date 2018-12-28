@@ -1,4 +1,4 @@
-package com.billt.core.billtcore.enums;
+package com.billt.core.invoicereceiver.enums;
 
 public class MerchantRequest {
 

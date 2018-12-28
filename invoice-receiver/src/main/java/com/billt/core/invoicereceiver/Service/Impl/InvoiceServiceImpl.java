@@ -1,7 +1,10 @@
 package com.billt.core.invoicereceiver.Service.Impl;
 
-import com.billt.core.billtcore.Model.invoiceReceiver.InvoiceRequestBean;
-import com.billt.core.billtcore.enums.invoiceReceiver.ValidationResults;
+import com.billt.core.invoicereceiver.Model.InvoiceRequestBean;
+import com.billt.core.invoicereceiver.Model.TransactionFlowRequestBean;
+import com.billt.core.invoicereceiver.Service.IRequestMapperService;
+import com.billt.core.invoicereceiver.Service.MerchantService;
+import com.billt.core.invoicereceiver.enums.invoiceReceiver.ValidationResults;
 import com.billt.core.invoicereceiver.Service.IInvoiceService;
 import com.billt.core.invoicereceiver.Service.IValidationService;
 import com.billt.core.invoicereceiver.utils.Response;
@@ -19,6 +22,15 @@ public class InvoiceServiceImpl implements IInvoiceService {
     @Qualifier(value = "validationservice")
     IValidationService validationService;
 
+    @Autowired
+    MerchantService merchantService;
+
+    @Autowired
+    @Qualifier(value = "requestmappperservice")
+    IRequestMapperService requestMapperService;
+
+
+
     private static final Logger LOG = LoggerFactory.getLogger(InvoiceServiceImpl.class);
 
     public ValidationResults validatePaymentRequest(InvoiceRequestBean requestData){
@@ -34,6 +46,14 @@ public class InvoiceServiceImpl implements IInvoiceService {
 
     public Response processInvoiceRequest(InvoiceRequestBean requestData){
         LOG.debug("Invoice Request Received for order id : {}", requestData.getOrderId());
+
+        Boolean validate = merchantService.findMerchantByMid(requestData.getMid());
+
+        if(validate){
+            TransactionFlowRequestBean transactionFlowRequestBean = requestMapperService.MapToTransactionFlowBean(requestData);
+
+        }
+
 
 
    return null;

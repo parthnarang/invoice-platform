@@ -1,12 +1,15 @@
 package com.billt.core.datasourcebase.repositories.jpa.read;
 
 import com.billt.core.datasourcebase.entities.jpa.Merchant;
+import com.billt.core.datasourcebase.entities.jpa.Vendor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 
-public interface MerchantReadRepository extends JpaRepository<Merchant, Long> {
+import java.util.List;
 
-    Merchant findAllByMid(@Param("mid") String mid);
+public interface VendorReadRepository extends JpaRepository<Vendor, Long> {
+
+    Vendor findAllByVid(@Param("vid") String vid);
 
 }
 
