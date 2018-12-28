@@ -46,22 +46,15 @@
         </dependency>
         <dependency>
             <groupId>com.billt.core</groupId>
-            <artifactId>common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.billt.core</groupId>
             <artifactId>datasource-base</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.billt.core</groupId>
-            <artifactId>datasource-base</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>6.0.6</version>
         </dependency>
+
 
     </dependencies>
 

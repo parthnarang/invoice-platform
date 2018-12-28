@@ -6,7 +6,6 @@
         <groupId>com.billt.core</groupId>
         <artifactId>invoice-platform</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath>../</relativePath>
     </parent>
     <groupId>com.billt.core</groupId>
     <artifactId>notification-service</artifactId>
@@ -33,6 +32,12 @@
         <dependency>
             <groupId>com.billt.core</groupId>
             <artifactId>billt-core</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.billt.core</groupId>
+            <artifactId>datasource-base</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

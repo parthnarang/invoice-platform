@@ -1,5 +1,4 @@
 package com.billt.core.invoicereceiver.utils;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 public class Response {
 

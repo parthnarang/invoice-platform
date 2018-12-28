@@ -24,7 +24,7 @@
     <modules>
         <module>invoice-receiver</module>
         <module>notification-service</module>
-		<module>common</module>
+		<module>datasource-base</module>
     </modules>
 
 	<dependencies>

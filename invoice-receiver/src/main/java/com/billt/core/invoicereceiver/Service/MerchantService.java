@@ -1,7 +1,7 @@
 package com.billt.core.invoicereceiver.Service;
 
-import com.billt.core.datasourcebase.entities.jpa.Merchant;
-import  com.billt.core.datasourcebase.repositories.jpa.read.*;
+import com.billt.core.datasourcebase.entities.jpa.*;
+import com.billt.core.datasourcebase.repositories.jpa.read.MerchantReadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
