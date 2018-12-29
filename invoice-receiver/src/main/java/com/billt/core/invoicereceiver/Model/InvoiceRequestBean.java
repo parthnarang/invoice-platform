@@ -2,8 +2,8 @@ package com.billt.core.invoicereceiver.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import javax.servlet.http.HttpServletRequest;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import static com.billt.core.invoicereceiver.Constants.InvoiceReceiverConstants.*;
 
@@ -14,7 +14,7 @@ import static com.billt.core.invoicereceiver.Constants.InvoiceReceiverConstants.
 @JsonIgnoreProperties
 public class InvoiceRequestBean {
 
-    private transient HttpServletRequest request;
+    private transient JSONObject request;
 
     @JsonProperty(MID)
     private String mid;
@@ -30,7 +30,7 @@ public class InvoiceRequestBean {
     @JsonProperty(VID)
     private String vid;
 
-    public HttpServletRequest getRequest() {
+    public JSONObject getRequest() {
         return request;
     }
 
@@ -61,7 +61,7 @@ public class InvoiceRequestBean {
     @JsonProperty(ORDER_ID)
     private String orderId;
 
-    public void setRequest(HttpServletRequest request) {
+    public void setRequest(JSONObject request) {
         this.request = request;
     }
 
@@ -125,16 +125,23 @@ public class InvoiceRequestBean {
     private Object data;
 
 
-    public InvoiceRequestBean(final HttpServletRequest request) {
+    public InvoiceRequestBean(final JSONObject request) {
         this.request = request;
-        this.vid = vid;
-        this.mid = request.getParameter(MID);
-        this.orderId = request.getParameter(ORDER_ID);
-        this.custId = request.getParameter(CUST_ID);
-        this.checksumhash = request.getParameter(CHECKSUMHASH);
-        this.mobileNo = request.getParameter(MOBILE_NO);
-        this.email = request.getParameter(EMAIL);
-        this.data = request.getParameter(DATA);
+        try{
+        this.vid = request.getString(VID);
+        this.mid = request.getString(MID);
+        this.orderId = request.getString(ORDER_ID);
+        this.custId = request.getString(CUST_ID);
+        this.checksumhash = request.getString(CHECKSUMHASH);
+        this.email = request.getString(EMAIL);
+        this.data = request.getJSONObject(DATA);
+        this.mobileNo = request.getString(MOBILE_NO);}
+        catch (JSONException e){
+            System.out.println(e.toString());
+        }
+    }
+    public InvoiceRequestBean(){
+
     }
 
 }

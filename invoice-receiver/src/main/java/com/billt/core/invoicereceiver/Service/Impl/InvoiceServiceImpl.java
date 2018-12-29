@@ -50,8 +50,8 @@ public class InvoiceServiceImpl implements IInvoiceService {
         Boolean validate = merchantService.findMerchantByMid(requestData.getMid());
 
         if(validate){
+            
             TransactionFlowRequestBean transactionFlowRequestBean = requestMapperService.MapToTransactionFlowBean(requestData);
-             not
         }
 
 
