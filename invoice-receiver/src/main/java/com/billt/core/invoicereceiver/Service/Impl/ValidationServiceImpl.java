@@ -27,7 +27,7 @@ public class ValidationServiceImpl implements IValidationService {
 
 
         if (!validateMid(requestData.getMid()) || !validateVid(requestData.getVid()) || !validateOrderId(requestData.getOrderId())
-                || !validateCustId(requestData.getCustId(),requestData.getEmail(),requestData.getMobileNo())){
+                || !validateCustId(requestData.getMobileNo(),requestData.getEmail())){
             return false;
         }
         return true;
@@ -35,7 +35,7 @@ public class ValidationServiceImpl implements IValidationService {
 
     private boolean validateMid(String mid) {
 
-        if (StringUtils.isEmpty(mid) || mid.length() > InvoiceReceiverConstants.MID_LENGTH || mid.length() > InvoiceReceiverConstants.MID_LENGTH) {
+        if (StringUtils.isEmpty(mid) || mid.length() > InvoiceReceiverConstants.MID_LENGTH) {
             LOG.error("Invalid MID ::{}", mid);
             return false;
         }
@@ -60,19 +60,13 @@ public class ValidationServiceImpl implements IValidationService {
         return true;
     }
 
-    private boolean validateCustId(String custID,String mobile,String email) {
+    private boolean validateCustId(String mobile,String email) {
 
-        if (StringUtils.isEmpty(custID) || custID.length() > InvoiceReceiverConstants.CUSTOMER_ID_MAX_LENGTH) {
-            LOG.error("Invalid custID ::{}", custID);
-            if(validateEmail(email))
+            if(validateEmail(email) && validateMobile(mobile))
                 return true;
-            if(validateMobile(mobile))
-                return true;
+             else
             return false;
         }
-
-        return true;
-    }
 
     private boolean validateMobile(String mobile) {
 
@@ -86,7 +80,7 @@ public class ValidationServiceImpl implements IValidationService {
 
     private boolean validateEmail(String email) {
 
-        if (StringUtils.isEmpty(email) || !Pattern.matches(InvoiceReceiverConstants.VALID_EMAIL_ADDRESS_REGEX, email)) {
+        if (!Pattern.matches(InvoiceReceiverConstants.VALID_EMAIL_ADDRESS_REGEX, email)) {
             LOG.error("Invalid email ::{}", email);
             return false;
         }

@@ -3,8 +3,8 @@ package com.billt.core.invoicereceiver.Controllers;
 
 import com.billt.core.invoicereceiver.Model.InvoiceRequestBean;
 import com.billt.core.invoicereceiver.Service.IInvoiceService;
+import com.billt.core.invoicereceiver.enums.ResponseCode;
 import com.billt.core.invoicereceiver.enums.invoiceReceiver.ValidationResults;
-import com.billt.core.invoicereceiver.utils.Response;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+import static com.billt.core.invoicereceiver.Constants.InvoiceReceiverConstants.*;
+
 @Controller
 @RequestMapping("/invoicereceiver/")
 public class InvoiceController {
@@ -42,9 +44,14 @@ public class InvoiceController {
 
             LOG.debug("Invoice Request Received for merchantId : {}", merchantId);
             JSONObject jsonRequest = mapToJson(request);
-            InvoiceRequestBean invoiceRequestBean = new InvoiceRequestBean(jsonRequest);
+            InvoiceRequestBean invoiceRequestBean = mapToInvoiceRequestBean(jsonRequest);
             processRequest(request, response, invoiceRequestBean, model);
+
+
         } catch (final Exception e) {
+            response.getWriter().print(new JSONObject(ResponseCode.INTERNAL_SERVER_ERROR));
+            response.setContentType("application/json");
+
             LOG.error("SYSTEM_ERROR : ", e);
         } finally {
             LOG.info("Total time taken for ProcessTransactionController is {} ms", System.currentTimeMillis()
@@ -56,35 +63,36 @@ public class InvoiceController {
     private void processRequest(final HttpServletRequest request, final HttpServletResponse response,
                                 InvoiceRequestBean invoiceRequestData, final Model model) throws IOException, ServletException {
 
-        Response customResponse = processInvoiceRequest(invoiceRequestData);
+        ResponseCode customResponse = processInvoiceRequest(invoiceRequestData);
         Assert.notNull(customResponse, "Service page response received was null");
 
-        //parse response here
-        //response.getOutputStream().wr(customResponse);
-        //response.setContentType("text/html");
+
+        response.getWriter().print(new JSONObject(customResponse));
+        response.setContentType("application/json");
 
     }
 
-    public Response processInvoiceRequest(final InvoiceRequestBean invoiceRequestData) {
+    public ResponseCode processInvoiceRequest(final InvoiceRequestBean invoiceRequestData) {
         LOG.info("InvoiceRequestbean received : {}", invoiceRequestData);
-        Response response=null;
+        ResponseCode responseCode=null;
         ValidationResults validationResults;
         validationResults = invoiceService.validatePaymentRequest(invoiceRequestData);
 
         switch (validationResults) {
             case CHECKSUM_VALIDATION_FAILURE:
                 LOG.error("CHECKSUM_FAILED_ERROR_MSG", invoiceRequestData.getMid());
-
+                responseCode = ResponseCode.CHECKSUM_MISMATCH;
                 break;
             case INVALID_DATA:
                 LOG.error("INVALID DATA", invoiceRequestData.getMid());
+                responseCode = ResponseCode.INVALID_REQUEST;
 
                 break;
             case VALIDATION_SUCCESS:
-                response = invoiceService.processInvoiceRequest(invoiceRequestData);
+                responseCode = invoiceService.processInvoiceRequest(invoiceRequestData);
 
         }
-        return response;
+        return responseCode;
     }
 
     private JSONObject mapToJson(HttpServletRequest request) throws JSONException {
@@ -101,22 +109,27 @@ public class InvoiceController {
 
     }
 
-   /* private InvoiceRequestBean mapToInvoiceRequestBean(JSONObject jsonObject) throws JSONException{
+    private InvoiceRequestBean mapToInvoiceRequestBean(JSONObject jsonObject) throws JSONException{
 
         InvoiceRequestBean invoiceRequestBean = new InvoiceRequestBean();
-        try{
-            invoiceRequestBean.setMid(jsonObject.getString(MID));
-            invoiceRequestBean.setVid(jsonObject.getString(VID));
-            invoiceRequestBean.
-            invoiceRequestBean.setData(jsonObject.getJSONObject(DATA));
-        }
-        catch (Exception e){
 
-        }
-
+            if(jsonObject.has(MID))
+                invoiceRequestBean.setMid(jsonObject.getString(MID));
+            if(jsonObject.has(VID))
+                invoiceRequestBean.setVid(jsonObject.getString(VID));
+            if(jsonObject.has(DATA))
+                invoiceRequestBean.setData(jsonObject.getJSONObject(DATA));
+            if(jsonObject.has(ORDER_ID))
+                invoiceRequestBean.setOrderId(jsonObject.getString(ORDER_ID));
+            if(jsonObject.has(CHECKSUMHASH))
+                invoiceRequestBean.setChecksumhash(jsonObject.getString(CHECKSUMHASH));
+            if(jsonObject.has(MOBILE_NO))
+                invoiceRequestBean.setMobileNo(jsonObject.getString(MOBILE_NO));
+            if(jsonObject.has(EMAIL))
+                invoiceRequestBean.setEmail(jsonObject.getString(EMAIL));
 
         return invoiceRequestBean;
-    }*/
+    }
 
 
 

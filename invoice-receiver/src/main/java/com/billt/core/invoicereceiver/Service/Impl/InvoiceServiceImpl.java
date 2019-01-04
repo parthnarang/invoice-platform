@@ -1,13 +1,13 @@
 package com.billt.core.invoicereceiver.Service.Impl;
 
+import com.billt.core.datasourcebase.collection.Invoice;
+import com.billt.core.datasourcebase.repositories.mongo.write.InvoiceWriteRepository;
+import com.billt.core.invoicereceiver.Exceptions.RequestDataMappingException;
 import com.billt.core.invoicereceiver.Model.InvoiceRequestBean;
 import com.billt.core.invoicereceiver.Model.TransactionFlowRequestBean;
-import com.billt.core.invoicereceiver.Service.IRequestMapperService;
-import com.billt.core.invoicereceiver.Service.MerchantService;
+import com.billt.core.invoicereceiver.Service.*;
+import com.billt.core.invoicereceiver.enums.ResponseCode;
 import com.billt.core.invoicereceiver.enums.invoiceReceiver.ValidationResults;
-import com.billt.core.invoicereceiver.Service.IInvoiceService;
-import com.billt.core.invoicereceiver.Service.IValidationService;
-import com.billt.core.invoicereceiver.utils.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,12 @@ public class InvoiceServiceImpl implements IInvoiceService {
     @Qualifier(value = "requestmappperservice")
     IRequestMapperService requestMapperService;
 
+    @Autowired
+    InvoiceWriteRepository invoiceWriteRepository;
 
+    @Autowired
+    @Qualifier(value="customerService")
+    ICustomerService iCustomerService;
 
     private static final Logger LOG = LoggerFactory.getLogger(InvoiceServiceImpl.class);
 
@@ -44,18 +49,25 @@ public class InvoiceServiceImpl implements IInvoiceService {
         return ValidationResults.VALIDATION_SUCCESS;
     }
 
-    public Response processInvoiceRequest(InvoiceRequestBean requestData){
-        LOG.debug("Invoice Request Received for order id : {}", requestData.getOrderId());
+    public ResponseCode processInvoiceRequest(InvoiceRequestBean requestData){
 
-        Boolean validate = merchantService.findMerchantByMid(requestData.getMid());
+        LOG.info("Invoice Request Received for order id : {}", requestData.getOrderId());
 
-        if(validate){
-            
-            TransactionFlowRequestBean transactionFlowRequestBean = requestMapperService.MapToTransactionFlowBean(requestData);
-        }
-
-
-
-   return null;
+     TransactionFlowRequestBean transactionFlowRequestBean = null;
+       try {
+           transactionFlowRequestBean = requestMapperService.mapToTransactionFlowBean(requestData);
+           saveNewInvoice(transactionFlowRequestBean);
+       }
+       catch (RequestDataMappingException e){
+        return e.getResponseCode();
+       }
+       return ResponseCode.TRANSACTION_SUCCESS;
     }
+
+    public void saveNewInvoice(TransactionFlowRequestBean flowRequestBean){
+
+        Invoice newInvoice = requestMapperService.mapToInvoiceCollection(flowRequestBean);
+        invoiceWriteRepository.save(newInvoice);
+
+   }
 }

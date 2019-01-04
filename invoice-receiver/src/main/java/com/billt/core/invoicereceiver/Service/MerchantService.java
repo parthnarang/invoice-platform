@@ -21,7 +21,6 @@ public class MerchantService {
         } else {
             return true;
         }
-
     }
 
 

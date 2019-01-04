@@ -20,6 +20,6 @@ public class InvoiceReceiverConstants {
     public static final Integer CUSTOMER_ID_MAX_LENGTH = 10;
 
     public static final String VALID_EMAIL_ADDRESS_REGEX =
-            "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\\\.[A-Z]{2,6}$";
+            "[a-zA-Z0-9_.]+@[a-zA-Z0-9]+.[a-zA-Z]{2,3}[.] {0,1}[a-zA-Z]+";
 
 }

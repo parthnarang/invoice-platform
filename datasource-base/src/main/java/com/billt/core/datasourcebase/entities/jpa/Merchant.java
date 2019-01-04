@@ -23,15 +23,16 @@ public class Merchant {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long merchantId;
-
-    String merchantName;
+    long id;
 
     @Column(unique = true)
     String mid;
-
-
-
-    Date createdOn;
+    String merchantName;
     String merchantAddress;
+    String contact1;
+    String contact2;
+    String email;
+    Date createdOn;
+    Date updatedOn;
+
 }

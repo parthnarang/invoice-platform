@@ -7,29 +7,25 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
 
-/**
- * Created by parth
- */
-
 @Getter
 @Setter
 @Data
 @Entity
-public class Vendor {
+
+public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
-    String vendorName;
-
     @Column(unique = true)
-    String vid;
+    String cid;
 
-    String contact1;
-    String contact2;
+    String name;
     String email;
+    String mobile;
 
     Date createdOn;
     Date updatedOn;
+
 }
