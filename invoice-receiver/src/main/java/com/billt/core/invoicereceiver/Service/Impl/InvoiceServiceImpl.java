@@ -4,7 +4,7 @@ import com.billt.core.datasourcebase.collection.Invoice;
 import com.billt.core.datasourcebase.repositories.mongo.write.InvoiceWriteRepository;
 import com.billt.core.invoicereceiver.Exceptions.RequestDataMappingException;
 import com.billt.core.invoicereceiver.Model.InvoiceRequestBean;
-import com.billt.core.invoicereceiver.Model.TransactionFlowRequestBean;
+import com.billt.core.datasourcebase.model.invoiceReceiver.TransactionFlowRequestBean;
 import com.billt.core.invoicereceiver.Service.*;
 import com.billt.core.invoicereceiver.enums.ResponseCode;
 import com.billt.core.invoicereceiver.enums.invoiceReceiver.ValidationResults;

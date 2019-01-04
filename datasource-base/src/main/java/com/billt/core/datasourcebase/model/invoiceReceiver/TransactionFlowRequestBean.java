@@ -1,4 +1,4 @@
-package com.billt.core.invoicereceiver.Model;
+package com.billt.core.datasourcebase.model.invoiceReceiver;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
