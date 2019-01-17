@@ -34,8 +34,8 @@ public class NotificationPush {
         //notificationData.setTitle("Hello Firebase Push Notification");
         //notificationRequestModel.setData(notificationData);
         notificationRequestModel.setData(transactionFlowRequestBean);
-        //Change
-        notificationRequestModel.setTo("eHp6V2Wtr4I:APA91bFLHRuScumQB0lnNRmeirxu5kV2lUPDZ8SbZKz");
+        //Client Token goes here - change to read from DB
+        notificationRequestModel.setTo("dLTmYXux1PA:APA91bHyv_iU4sR89M-Vrh2RzsuQwZMb47su5O0EZTW6mK4MC3StBS_fiNUwDHaoo_nN0LpIPib2BIw2_13Hqo5EO9_Jys1jSm83LZ_oO8cHmD1QWawB5_lVAQGrHD7CRZdcOO1RQoUs");
 
 
         Gson gson = new Gson();
@@ -49,8 +49,8 @@ public class NotificationPush {
 
         // server key of your firebase project goes here in header field.
         // You can get it from firebase console.
-        //Change
-            postRequest.addHeader("Authorization", "key=AAAAA2j2S4g:APA91bEw0s0bbdwAFrFWk8V3O1839dCM5rlPyPLQQlqfpLAnOCZcasMwQJ9w1drfM_nRy24YzTd_iXOtldhkZ3iyC6L47-9t4ymwazqHvtDtw9UCuRqLEpcRTCxiabM2cUBCC8QRRk4q");
+        //Server Key
+        postRequest.addHeader("Authorization", "key=AAAAA2j2S4g:APA91bEw0s0bbdwAFrFWk8V3O1839dCM5rlPyPLQQlqfpLAnOCZcasMwQJ9w1drfM_nRy24YzTd_iXOtldhkZ3iyC6L47-9t4ymwazqHvtDtw9UCuRqLEpcRTCxiabM2cUBCC8QRRk4q");
         postRequest.setEntity(input);
 
         System.out.println("request:" + json);
