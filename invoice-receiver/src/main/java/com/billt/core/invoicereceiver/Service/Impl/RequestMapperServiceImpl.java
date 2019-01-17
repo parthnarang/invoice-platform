@@ -49,7 +49,7 @@ public class RequestMapperServiceImpl implements IRequestMapperService {
         transactionFlowRequestBean.setOrderId(invoiceRequestBean.getOrderId());
 
         if(customer!=null){
-            transactionFlowRequestBean.setCustId(customer.getId());
+            transactionFlowRequestBean.setCid(customer.getCid());
         }
 
         if(invoiceRequestBean.getEmail() != null){
@@ -81,6 +81,9 @@ public class RequestMapperServiceImpl implements IRequestMapperService {
 
         if(flowRequestBean.getEmail()!= null)
             invoice.setEmail(flowRequestBean.getEmail());
+
+        if(flowRequestBean.getCid()!= null)
+            invoice.setCid(flowRequestBean.getCid());
 
         invoice.setData(flowRequestBean.getData());
 

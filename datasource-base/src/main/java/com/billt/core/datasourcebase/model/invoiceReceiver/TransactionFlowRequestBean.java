@@ -19,7 +19,7 @@ public class TransactionFlowRequestBean {
     private String mobileNo;
 
     @Length(max=10)
-    private Long custId;
+    private String cid;
 
     @Length(max = 100)
     private String email;

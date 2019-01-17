@@ -8,5 +8,6 @@ public interface CustomerReadRepository extends JpaRepository<Customer, Long> {
 
     Customer findCustomerByEmail(@Param("email") String email);
     Customer findCustomerByMobile(@Param("mobile") String mobile);
+    Customer findCustomerByCid(@Param("cid") String cid);
 
 }

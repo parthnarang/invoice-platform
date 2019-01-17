@@ -29,10 +29,10 @@ public class Merchant {
     String mid;
     String merchantName;
     String merchantAddress;
+    String merchantLogo;
+    String email;
     String contact1;
     String contact2;
-    String email;
     Date createdOn;
     Date updatedOn;
-
 }

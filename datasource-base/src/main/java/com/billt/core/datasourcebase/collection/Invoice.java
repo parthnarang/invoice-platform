@@ -10,7 +10,7 @@ import java.util.Date;
 @Data
 public class Invoice {
 
-    private Long custId;
+    private String cid;
     private String mid;
     private String orderId;
     private String vid;
