@@ -8,6 +8,7 @@ import com.billt.core.datasourcebase.model.invoiceReceiver.TransactionFlowReques
 import com.billt.core.invoicereceiver.Service.*;
 import com.billt.core.invoicereceiver.enums.ResponseCode;
 import com.billt.core.invoicereceiver.enums.invoiceReceiver.ValidationResults;
+import com.billt.core.notificationservice.Services.NotificationPush;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,9 @@ public class InvoiceServiceImpl implements IInvoiceService {
     @Qualifier(value="customerService")
     ICustomerService iCustomerService;
 
+    @Autowired
+    NotificationPush notificationPush;
+
     private static final Logger LOG = LoggerFactory.getLogger(InvoiceServiceImpl.class);
 
     public ValidationResults validatePaymentRequest(InvoiceRequestBean requestData){
@@ -56,10 +60,15 @@ public class InvoiceServiceImpl implements IInvoiceService {
      TransactionFlowRequestBean transactionFlowRequestBean = null;
        try {
            transactionFlowRequestBean = requestMapperService.mapToTransactionFlowBean(requestData);
-           saveNewInvoice(transactionFlowRequestBean);
+           //saveNewInvoice(transactionFlowRequestBean);
+
+           notificationPush.pushNewInvoice(transactionFlowRequestBean);
        }
        catch (RequestDataMappingException e){
         return e.getResponseCode();
+       }
+       catch (Exception e){
+   System.out.println("Dd");
        }
        return ResponseCode.TRANSACTION_SUCCESS;
     }

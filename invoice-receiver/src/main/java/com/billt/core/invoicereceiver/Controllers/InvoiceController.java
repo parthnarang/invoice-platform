@@ -39,6 +39,7 @@ public class InvoiceController {
     @PostMapping(value = "processInvoice",consumes = "application/json")
     public void processInvoice(final HttpServletRequest request, final HttpServletResponse response,
                                final Model model, @RequestParam("MID") String merchantId) throws IOException, ServletException {
+        System.out.println("sddd");
         final long startTime = System.currentTimeMillis();
         try {
 

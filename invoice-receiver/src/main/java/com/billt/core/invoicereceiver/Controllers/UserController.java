@@ -34,7 +34,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("CheckPhoneNo")
+ /*   @PostMapping("CheckPhoneNo")
     public ResponseEntity<Boolean> CheckPhoneNo(@RequestParam("phoneno") String phoneNo) {
         System.out.println(phoneNo);
         User user = userRepository.findByMobile(phoneNo);
@@ -49,7 +49,7 @@ public class UserController {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-    }
+    }*/
 
     @GetMapping("")
     public void Check() {

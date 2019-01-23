@@ -1,16 +1,17 @@
 package com.billt.core.notificationservice.Services;
 import com.billt.core.datasourcebase.model.invoiceReceiver.TransactionFlowRequestBean;
-import org.springframework.stereotype.Service;
-import com.billt.core.notificationservice.Models.NotificationData;
 import com.billt.core.notificationservice.Models.NotificationRequestModel;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
 import java.io.IOException;
 import java.lang.reflect.Type;
 
@@ -19,7 +20,10 @@ import java.lang.reflect.Type;
 @Service
 public class NotificationPush {
 
+    private static final Logger LOG = LoggerFactory.getLogger(NotificationPush.class);
     public void pushNewInvoice(TransactionFlowRequestBean transactionFlowRequestBean) throws IOException{
+
+        LOG.info("Notification Push for transaction : {}", transactionFlowRequestBean.getOrderId());
         DefaultHttpClient httpClient = new DefaultHttpClient();
         HttpPost postRequest = new HttpPost(
                 "https://fcm.googleapis.com/fcm/send");
