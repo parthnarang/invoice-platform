@@ -45,6 +45,12 @@
             <version>4.5.6</version>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+            <version>2.1.1.RELEASE</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.billt.core</groupId>
             <artifactId>datasource-base</artifactId>
             <version>0.0.1-SNAPSHOT</version>

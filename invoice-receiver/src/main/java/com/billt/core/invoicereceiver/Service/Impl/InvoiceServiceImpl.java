@@ -8,6 +8,7 @@ import com.billt.core.datasourcebase.model.invoiceReceiver.TransactionFlowReques
 import com.billt.core.invoicereceiver.Service.*;
 import com.billt.core.invoicereceiver.enums.ResponseCode;
 import com.billt.core.invoicereceiver.enums.invoiceReceiver.ValidationResults;
+import com.billt.core.notificationservice.Services.EmailSender;
 import com.billt.core.notificationservice.Services.NotificationPush;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,9 @@ public class InvoiceServiceImpl implements IInvoiceService {
     @Autowired
     NotificationPush notificationPush;
 
+    @Autowired
+    EmailSender emailSender;
+
     private static final Logger LOG = LoggerFactory.getLogger(InvoiceServiceImpl.class);
 
     public ValidationResults validatePaymentRequest(InvoiceRequestBean requestData){
@@ -63,6 +67,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
            //saveNewInvoice(transactionFlowRequestBean);
 
            notificationPush.pushNewInvoice(transactionFlowRequestBean);
+           emailSender.sendSimpleMessage("norirahul@gmail.com","Test msil","Hello this is a test mail for BillT");
        }
        catch (RequestDataMappingException e){
         return e.getResponseCode();
