@@ -33,6 +33,7 @@ public class CustomerController {
     @GetMapping("rest/fetchCustomerInvoices")
     @ResponseBody
     public List<Invoice> findCustomerInvoices(@RequestParam("cid") String cid) throws IOException, ServletException {
+        List<Invoice> invoices = invoiceReadRepository.findByCid(cid);
 
         return invoiceReadRepository.findByCid(cid);
     }

@@ -64,10 +64,10 @@ public class InvoiceServiceImpl implements IInvoiceService {
      TransactionFlowRequestBean transactionFlowRequestBean = null;
        try {
            transactionFlowRequestBean = requestMapperService.mapToTransactionFlowBean(requestData);
-           //saveNewInvoice(transactionFlowRequestBean);
 
            notificationPush.pushNewInvoice(transactionFlowRequestBean);
            emailSender.sendSimpleMessage("norirahul@gmail.com","Test msil","Hello this is a test mail for BillT");
+           saveNewInvoice(transactionFlowRequestBean);
        }
        catch (RequestDataMappingException e){
         return e.getResponseCode();
@@ -79,8 +79,9 @@ public class InvoiceServiceImpl implements IInvoiceService {
     }
 
     public void saveNewInvoice(TransactionFlowRequestBean flowRequestBean){
-
+        LOG.info("transaction flow bean = "+flowRequestBean.toString());
         Invoice newInvoice = requestMapperService.mapToInvoiceCollection(flowRequestBean);
+        LOG.info("transaction flow bean = "+newInvoice.toString());
         invoiceWriteRepository.save(newInvoice);
 
    }
