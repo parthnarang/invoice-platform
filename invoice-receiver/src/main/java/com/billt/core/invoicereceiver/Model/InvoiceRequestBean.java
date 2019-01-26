@@ -1,10 +1,13 @@
 package com.billt.core.invoicereceiver.Model;
 
+
+import com.billt.core.datasourcebase.model.invoiceReceiver.InvoiceItem;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import static com.billt.core.invoicereceiver.Constants.InvoiceReceiverConstants.*;
 
@@ -31,29 +34,26 @@ public class InvoiceRequestBean {
     private String mobileNo;
     @JsonProperty(EMAIL)
     private String email;
-    @JsonProperty(DATA)
-    private Object data;
-
-
-    public InvoiceRequestBean(final JSONObject request) {
-        this.request = request;
-        try{
-            this.vid = request.getString(VID);
-            this.mid = request.getString(MID);
-            this.orderId = request.getString(ORDER_ID);
-            this.billtId = request.getString(CUST_ID);
-            this.checksumhash = request.getString(CHECKSUMHASH);
-            this.email = request.getString(EMAIL);
-            this.data = request.getJSONObject(DATA);
-            this.mobileNo = request.getString(MOBILE_NO);}
-        catch (JSONException e){
-            System.out.println(e.toString());
-        }
-    }
-    public InvoiceRequestBean(){
-
-    }
-
+    @JsonProperty(MERCHANT_NAME)
+    private String merchantName;
+    @JsonProperty(ADDRESS)
+    private String address;
+    @JsonProperty(PHONE_NO)
+    private String phoneNo;
+    @JsonProperty(GST)
+    private String gst;
+    @JsonProperty(TIME)
+    private String time;
+    @JsonProperty(DATE)
+    private String date;
+    @JsonProperty(ITEMS)
+    private List<InvoiceItem> invoiceItems;
+    @JsonProperty(TOTAL_AMT)
+    private String totalAmt;
+    @JsonProperty(VAT)
+    private String vat;
+    @JsonProperty(NET)
+    private String net;
 }
 
 

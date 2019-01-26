@@ -1,6 +1,7 @@
 package com.billt.core.invoicereceiver.Controllers;
 
 
+import com.billt.core.datasourcebase.model.invoiceReceiver.InvoiceItem;
 import com.billt.core.invoicereceiver.Model.InvoiceRequestBean;
 import com.billt.core.invoicereceiver.Service.IInvoiceService;
 import com.billt.core.invoicereceiver.enums.ResponseCode;
@@ -23,6 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.billt.core.invoicereceiver.Constants.InvoiceReceiverConstants.*;
 
@@ -118,8 +121,6 @@ public class InvoiceController {
                 invoiceRequestBean.setMid(jsonObject.getString(MID));
             if(jsonObject.has(VID))
                 invoiceRequestBean.setVid(jsonObject.getString(VID));
-            if(jsonObject.has(DATA))
-                invoiceRequestBean.setData(jsonObject.getJSONObject(DATA));
             if(jsonObject.has(ORDER_ID))
                 invoiceRequestBean.setOrderId(jsonObject.getString(ORDER_ID));
             if(jsonObject.has(CHECKSUMHASH))
@@ -128,10 +129,39 @@ public class InvoiceController {
                 invoiceRequestBean.setMobileNo(jsonObject.getString(MOBILE_NO));
             if(jsonObject.has(EMAIL))
                 invoiceRequestBean.setEmail(jsonObject.getString(EMAIL));
+            if(jsonObject.has(ITEMS)) {
+                List<InvoiceItem> invoiceItems = new ArrayList<InvoiceItem>(jsonObject.getJSONArray(ITEMS).length());
+                for (int i = 0; i < jsonObject.getJSONArray(ITEMS).length(); i++) {
+                    JSONObject itemObject = jsonObject.getJSONArray(ITEMS).getJSONObject(i);
+                    invoiceItems.add(new InvoiceItem(itemObject.getString("DESCRIPTION")
+                    ,itemObject.getString("QTY"),itemObject.getString("RATE"),itemObject.getString("AMOUNT")));
+                    invoiceRequestBean.setInvoiceItems(invoiceItems);
+                }
+            }
+        if(jsonObject.has(MERCHANT_NAME))
+            invoiceRequestBean.setMerchantName(jsonObject.getString(MERCHANT_NAME));
+        if(jsonObject.has(ADDRESS))
+            invoiceRequestBean.setAddress(jsonObject.getString(ADDRESS));
+        if(jsonObject.has(PHONE_NO))
+            invoiceRequestBean.setPhoneNo(jsonObject.getString(PHONE_NO));
+        if(jsonObject.has(TIME))
+            invoiceRequestBean.setTime(jsonObject.getString(TIME));
+        if(jsonObject.has(DATE))
+            invoiceRequestBean.setDate(jsonObject.getString(DATE));
+        if(jsonObject.has(GST))
+            invoiceRequestBean.setGst(jsonObject.getString(GST));
+        if(jsonObject.has(TOTAL_AMT))
+            invoiceRequestBean.setTotalAmt(jsonObject.getString(TOTAL_AMT));
+        if(jsonObject.has(VAT))
+            invoiceRequestBean.setVat(jsonObject.getString(VAT));
+        if(jsonObject.has(TOTAL_AMT))
+            invoiceRequestBean.setTotalAmt(jsonObject.getString(TOTAL_AMT));
+        if(jsonObject.has(NET))
+            invoiceRequestBean.setNet(jsonObject.getString(NET));
 
-        return invoiceRequestBean;
-    }
+                return invoiceRequestBean;
 
+            }
 
 
 

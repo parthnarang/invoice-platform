@@ -9,6 +9,6 @@ import java.util.List;
 public interface InvoiceReadRepository extends MongoRepository<Invoice,String> {
 
     public List<Invoice> findByEmail(@RequestParam("email") String email);
-    public List<Invoice> findByCid(@RequestParam("cid") String cid);
+    List<Invoice> findByCid(String cid);
 
 }
