@@ -1,10 +1,12 @@
 package com.billt.core.datasourcebase.collection;
 
+import com.billt.core.datasourcebase.model.invoiceReceiver.InvoiceItem;
 import lombok.Data;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.List;
 
 @Document(collection = "user_invoices")
 @Data
@@ -20,7 +22,30 @@ public class Invoice {
 
     private String mobile;
     private String email;
-    private Object data;
-    private Date date;
+
+    private String merchantName;
+
+    private String address;
+
+    private String phoneNo;
+
+    private String gst;
+
+    private String time;
+
+    private String date;
+
+    private List<InvoiceItem> invoiceItems;
+
+    private String totalAmt;
+
+    private String vat;
+
+
+    private String net;
+
+    private Date billtDate;
+
+
 
 }

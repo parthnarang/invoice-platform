@@ -11,7 +11,16 @@ public class InvoiceReceiverConstants {
     public static final String CHECKSUMHASH = "checksumhash";
     public static final String MOBILE_NO = "mobile";
     public static final String EMAIL = "email";
-    public static final String DATA = "data";
+    public static final String MERCHANT_NAME = "merchant_name";
+    public static final String ADDRESS = "address";
+    public static final String PHONE_NO = "phone_no";
+    public static final String GST = "gst";
+    public static final String TIME = "time";
+    public static final String DATE = "date";
+    public static final String ITEMS = "ITEMS";
+    public static final String TOTAL_AMT = "total_amt";
+    public static final String VAT = "vat";
+    public static final String NET = "net";
 
 
     //validation parameters

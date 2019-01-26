@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class TransactionFlowRequestBean {
@@ -24,11 +25,28 @@ public class TransactionFlowRequestBean {
     @Length(max = 100)
     private String email;
 
-    @NotBlank
-    private Object data;
+    private String merchantName;
+
+    private String address;
+
+    private String phoneNo;
+
+    private String gst;
+
+    private String time;
+
+    private String date;
+
+    private List<InvoiceItem> invoiceItems;
+
+    private String totalAmt;
+
+    private String vat;
+
+    private String net;
 
     @NotBlank
-    private Date date;
+    private Date billtDate;
 
     @Length(min = 0, max = 64)
     private String transID;
