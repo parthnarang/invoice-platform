@@ -10,6 +10,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -21,6 +23,7 @@ import java.lang.reflect.Type;
 public class NotificationPush {
 
     private static final Logger LOG = LoggerFactory.getLogger(NotificationPush.class);
+    @Async
     public void pushNewInvoice(TransactionFlowRequestBean transactionFlowRequestBean) throws IOException{
 
         LOG.info("Notification Push for transaction : {}", transactionFlowRequestBean.getOrderId());
