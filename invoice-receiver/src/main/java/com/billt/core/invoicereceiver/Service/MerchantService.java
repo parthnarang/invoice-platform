@@ -23,5 +23,14 @@ public class MerchantService {
         }
     }
 
+    public String findMerchantLogoByMid(String mid){
+        Merchant merchant = merchantReadRepository.findAllByMid(mid);
+        if(merchant == null){
+            return "NULL";
+        } else{
+            return merchant.getMerchantLogo();
+        }
+    }
+
 
 }

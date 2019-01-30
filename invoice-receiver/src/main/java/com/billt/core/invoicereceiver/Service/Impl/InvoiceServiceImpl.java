@@ -1,6 +1,8 @@
 package com.billt.core.invoicereceiver.Service.Impl;
 
 import com.billt.core.datasourcebase.collection.Invoice;
+import com.billt.core.datasourcebase.entities.jpa.Customer;
+import com.billt.core.datasourcebase.repositories.jpa.read.CustomerReadRepository;
 import com.billt.core.datasourcebase.repositories.mongo.write.InvoiceWriteRepository;
 import com.billt.core.invoicereceiver.Exceptions.RequestDataMappingException;
 import com.billt.core.invoicereceiver.Model.InvoiceRequestBean;
@@ -44,6 +46,9 @@ public class InvoiceServiceImpl implements IInvoiceService {
     @Autowired
     EmailSender emailSender;
 
+    @Autowired
+    CustomerReadRepository customerReadRepository;
+
     private static final Logger LOG = LoggerFactory.getLogger(InvoiceServiceImpl.class);
 
     public ValidationResults validatePaymentRequest(InvoiceRequestBean requestData){
@@ -66,7 +71,26 @@ public class InvoiceServiceImpl implements IInvoiceService {
            transactionFlowRequestBean = requestMapperService.mapToTransactionFlowBean(requestData);
 
            notificationPush.pushNewInvoice(transactionFlowRequestBean);
-           emailSender.sendSimpleMessage("norirahul@gmail.com","Test msil","Hello this is a test mail for BillT");
+           String uemail = "";
+
+           if(transactionFlowRequestBean.getEmail() != null){
+               uemail = transactionFlowRequestBean.getEmail();
+           } else if(transactionFlowRequestBean.getPhoneNo() != null){
+               String uphone = "";
+               uphone = transactionFlowRequestBean.getPhoneNo();
+               Customer customer = customerReadRepository.findCustomerByMobile(uphone);
+               uemail = customer.getEmail();
+           } else if(transactionFlowRequestBean.getCid() != null){
+               String ucid = "";
+               ucid = transactionFlowRequestBean.getCid();
+               Customer customer = customerReadRepository.findCustomerByMobile(ucid);
+               uemail = customer.getEmail();
+           }
+           if(uemail.compareTo("") != 0){
+               //emailSender.sendSimpleMessage("norirahul@gmail.com","Test mail","Hello this is a test mail for BillT");
+               emailSender.sendSimpleMessage(uemail,"Test mail","Hello this is a test mail for BillT");
+           }
+
            saveNewInvoice(transactionFlowRequestBean);
        }
        catch (RequestDataMappingException e){

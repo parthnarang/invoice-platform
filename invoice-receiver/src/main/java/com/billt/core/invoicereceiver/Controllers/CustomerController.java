@@ -5,6 +5,7 @@ import com.billt.core.datasourcebase.entities.jpa.Customer;
 import com.billt.core.datasourcebase.repositories.mongo.read.InvoiceReadRepository;
 import com.billt.core.invoicereceiver.Model.ResponseMessage;
 import com.billt.core.invoicereceiver.Service.ICustomerService;
+import com.billt.core.invoicereceiver.Service.MerchantService;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -85,6 +86,16 @@ public class CustomerController {
             return responseMessage;
         }
 
+    }
+
+    @GetMapping("GetMerchantLogo")
+    public ResponseEntity<String> GetMerchantLogo(@RequestParam("mid") String mid){
+        MerchantService merchantService = new MerchantService();
+        String logoUrl = merchantService.findMerchantLogoByMid(mid);
+        if(logoUrl.compareTo("NULL") == 0){
+            return new ResponseEntity<String>("",HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<String>(logoUrl,HttpStatus.OK);
     }
 
 }
