@@ -33,6 +33,20 @@ public class TransactionFlowRequestBean {
 
     private String gst;
 
+    private String tin;
+
+    private String subTotal;
+
+    private String discount;
+
+    private String cgst;
+
+    private String sgst;
+
+    private String serviceCharge;
+
+    private String vat;
+
     private String time;
 
     private String date;
@@ -40,8 +54,6 @@ public class TransactionFlowRequestBean {
     private List<InvoiceItem> invoiceItems;
 
     private String totalAmt;
-
-    private String vat;
 
     private String net;
 

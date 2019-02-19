@@ -35,6 +35,16 @@ public class Invoice {
 
     private String date;
 
+    private String cgst;
+
+    private String sgst;
+
+    private String discount;
+
+    private String serviceCharge;
+
+    private String tin;
+
     private List<InvoiceItem> invoiceItems;
 
     private String totalAmt;

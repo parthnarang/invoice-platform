@@ -1,7 +1,11 @@
 package com.billt.core.invoicereceiver.Controllers;
 
 
+import com.billt.core.datasourcebase.Service.IOrderService;
+import com.billt.core.datasourcebase.entities.jpa.Merchant;
+import com.billt.core.datasourcebase.entities.jpa.Order;
 import com.billt.core.datasourcebase.model.invoiceReceiver.InvoiceItem;
+import com.billt.core.datasourcebase.repositories.jpa.read.MerchantReadRepository;
 import com.billt.core.invoicereceiver.Model.InvoiceRequestBean;
 import com.billt.core.invoicereceiver.Service.IInvoiceService;
 import com.billt.core.invoicereceiver.enums.ResponseCode;
@@ -38,6 +42,11 @@ public class InvoiceController {
     @Autowired
     @Qualifier(value = "invoiceService")
     IInvoiceService invoiceService;
+
+    @Autowired
+    @Qualifier(value = "orderService")
+    IOrderService iOrderService;
+
 
     @PostMapping(value = "processInvoice",consumes = "application/json")
     public void processInvoice(final HttpServletRequest request, final HttpServletResponse response,
@@ -117,12 +126,16 @@ public class InvoiceController {
 
         InvoiceRequestBean invoiceRequestBean = new InvoiceRequestBean();
 
-            if(jsonObject.has(MID))
+            if(jsonObject.has(MID)) {
                 invoiceRequestBean.setMid(jsonObject.getString(MID));
+            }
             if(jsonObject.has(VID))
                 invoiceRequestBean.setVid(jsonObject.getString(VID));
-            if(jsonObject.has(ORDER_ID))
-                invoiceRequestBean.setOrderId(jsonObject.getString(ORDER_ID));
+            if(jsonObject.has(ORDER_ID)) {
+                //invoiceRequestBean.setOrderId(jsonObject.getString(ORDER_ID));
+                Order order = iOrderService.fetchOrder(jsonObject.getString(MID));
+                invoiceRequestBean.setOrderId(order.getOrderId());
+            }
             if(jsonObject.has(CHECKSUMHASH))
                 invoiceRequestBean.setChecksumhash(jsonObject.getString(CHECKSUMHASH));
             if(jsonObject.has(MOBILE_NO))
@@ -134,16 +147,10 @@ public class InvoiceController {
                 for (int i = 0; i < jsonObject.getJSONArray(ITEMS).length(); i++) {
                     JSONObject itemObject = jsonObject.getJSONArray(ITEMS).getJSONObject(i);
                     invoiceItems.add(new InvoiceItem(itemObject.getString("DESCRIPTION")
-                    ,itemObject.getString("QTY"),itemObject.getString("RATE"),itemObject.getString("AMOUNT")));
+                    ,itemObject.getString("QTY"),itemObject.getString("RATE"),itemObject.getString("AMOUNT"),itemObject.getString("DISCOUNT")));
                     invoiceRequestBean.setInvoiceItems(invoiceItems);
                 }
             }
-        if(jsonObject.has(MERCHANT_NAME))
-            invoiceRequestBean.setMerchantName(jsonObject.getString(MERCHANT_NAME));
-        if(jsonObject.has(ADDRESS))
-            invoiceRequestBean.setAddress(jsonObject.getString(ADDRESS));
-        if(jsonObject.has(PHONE_NO))
-            invoiceRequestBean.setPhoneNo(jsonObject.getString(PHONE_NO));
         if(jsonObject.has(TIME))
             invoiceRequestBean.setTime(jsonObject.getString(TIME));
         if(jsonObject.has(DATE))
@@ -161,9 +168,9 @@ public class InvoiceController {
 
                 return invoiceRequestBean;
 
-            }
-
-
-
-
     }
+
+
+
+
+}

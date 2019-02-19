@@ -24,24 +24,29 @@ public class InvoiceRequestBean {
     private String mid;
     @JsonProperty(VID)
     private String vid;
-    @JsonProperty(ORDER_ID)
     private String orderId;
     @JsonProperty(CUST_ID)
     private String billtId;
     @JsonProperty(CHECKSUMHASH)
     private String checksumhash;
-    @JsonProperty(MOBILE_NO)
-    private String mobileNo;
     @JsonProperty(EMAIL)
     private String email;
-    @JsonProperty(MERCHANT_NAME)
-    private String merchantName;
-    @JsonProperty(ADDRESS)
-    private String address;
-    @JsonProperty(PHONE_NO)
-    private String phoneNo;
+    @JsonProperty(MOBILE_NO)
+    private String mobileNo;
     @JsonProperty(GST)
     private String gst;
+    @JsonProperty(CGST)
+    private String cgst;
+    @JsonProperty(SGST)
+    private String sgst;
+    @JsonProperty(TIN)
+    private String tin;
+    @JsonProperty(DISCOUNT)
+    private String discount;
+    @JsonProperty(SERVICE_CHARGE)
+    private String serviceCharge;
+    @JsonProperty(SUBTOTAL)
+    private String subtotal;
     @JsonProperty(TIME)
     private String time;
     @JsonProperty(DATE)

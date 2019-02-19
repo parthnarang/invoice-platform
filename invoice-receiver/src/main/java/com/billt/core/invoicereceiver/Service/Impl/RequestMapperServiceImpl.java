@@ -3,6 +3,7 @@ package com.billt.core.invoicereceiver.Service.Impl;
 import com.billt.core.datasourcebase.collection.Invoice;
 import com.billt.core.datasourcebase.entities.jpa.Customer;
 import com.billt.core.datasourcebase.model.invoiceReceiver.TransactionFlowRequestBean;
+import com.billt.core.datasourcebase.repositories.mongo.write.InvoiceWriteRepository;
 import com.billt.core.invoicereceiver.Exceptions.RequestDataMappingException;
 import com.billt.core.invoicereceiver.Model.InvoiceRequestBean;
 import com.billt.core.invoicereceiver.Service.ICustomerService;
@@ -26,6 +27,9 @@ public class RequestMapperServiceImpl implements IRequestMapperService {
     @Autowired
     MerchantService merchantService;
 
+
+   // InvoiceWriteRepository invoiceWriteRepository;
+
     @Autowired
     @Qualifier(value ="customerService")
     ICustomerService customerService;
@@ -47,15 +51,20 @@ public class RequestMapperServiceImpl implements IRequestMapperService {
         transactionFlowRequestBean.setMid(invoiceRequestBean.getMid());
         transactionFlowRequestBean.setVid(invoiceRequestBean.getVid());
         transactionFlowRequestBean.setOrderId(invoiceRequestBean.getOrderId());
-        transactionFlowRequestBean.setMerchantName(invoiceRequestBean.getMerchantName());
-        transactionFlowRequestBean.setAddress(invoiceRequestBean.getAddress());
-        transactionFlowRequestBean.setPhoneNo(invoiceRequestBean.getPhoneNo());
+        //transactionFlowRequestBean.setMerchantName(invoiceRequestBean.getMerchantName());
+        //transactionFlowRequestBean.setAddress(invoiceRequestBean.getAddress());
+        //transactionFlowRequestBean.setPhoneNo(invoiceRequestBean.getPhoneNo());
         transactionFlowRequestBean.setGst(invoiceRequestBean.getGst());
         transactionFlowRequestBean.setTime(invoiceRequestBean.getTime());
         transactionFlowRequestBean.setDate(invoiceRequestBean.getDate());
         transactionFlowRequestBean.setTotalAmt(invoiceRequestBean.getTotalAmt());
         transactionFlowRequestBean.setVat(invoiceRequestBean.getVat());
         transactionFlowRequestBean.setNet(invoiceRequestBean.getNet());
+        transactionFlowRequestBean.setCgst(invoiceRequestBean.getCgst());
+        transactionFlowRequestBean.setSgst(invoiceRequestBean.getSgst());
+        transactionFlowRequestBean.setDiscount(invoiceRequestBean.getDiscount());
+        transactionFlowRequestBean.setServiceCharge(invoiceRequestBean.getServiceCharge());
+        transactionFlowRequestBean.setTin(invoiceRequestBean.getTin());
         transactionFlowRequestBean.setInvoiceItems(invoiceRequestBean.getInvoiceItems());
 
         if(customer!=null){
@@ -69,7 +78,13 @@ public class RequestMapperServiceImpl implements IRequestMapperService {
             transactionFlowRequestBean.setMobileNo(invoiceRequestBean.getMobileNo());
         }
 
-        transactionFlowRequestBean.setTransID("123y34747464362");
+        //Invoice invoice = invoiceWriteRepository.findTopByOrderByCreatedDesc();
+        String transId = "123";
+        /*invoice.getTransID();*/
+        long transacId = Long.parseLong(transId)+1;
+
+        //transactionFlowRequestBean.setTransID("123y34747464362");
+        transactionFlowRequestBean.setTransID(String.valueOf(transacId));
         transactionFlowRequestBean.setBilltDate(new Date());
 
         return transactionFlowRequestBean;
@@ -93,6 +108,11 @@ public class RequestMapperServiceImpl implements IRequestMapperService {
         invoice.setTotalAmt(flowRequestBean.getTotalAmt());
         invoice.setVat(flowRequestBean.getVat());
         invoice.setNet(flowRequestBean.getNet());
+        invoice.setCgst(flowRequestBean.getCgst());
+        invoice.setSgst(flowRequestBean.getSgst());
+        invoice.setDiscount(flowRequestBean.getDiscount());
+        invoice.setServiceCharge(flowRequestBean.getServiceCharge());
+        invoice.setTin(flowRequestBean.getTin());
         invoice.setInvoiceItems(flowRequestBean.getInvoiceItems());
         invoice.setBilltDate(flowRequestBean.getBilltDate());
 
@@ -104,9 +124,6 @@ public class RequestMapperServiceImpl implements IRequestMapperService {
 
         if(flowRequestBean.getCid()!= null)
             invoice.setCid(flowRequestBean.getCid());
-
-
-
 
         return invoice;
 

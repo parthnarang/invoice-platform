@@ -2,7 +2,9 @@ package com.billt.core.invoicereceiver.Service.Impl;
 
 import com.billt.core.datasourcebase.collection.Invoice;
 import com.billt.core.datasourcebase.entities.jpa.Customer;
+import com.billt.core.datasourcebase.entities.jpa.Merchant;
 import com.billt.core.datasourcebase.repositories.jpa.read.CustomerReadRepository;
+import com.billt.core.datasourcebase.repositories.jpa.read.MerchantReadRepository;
 import com.billt.core.datasourcebase.repositories.mongo.write.InvoiceWriteRepository;
 import com.billt.core.invoicereceiver.Exceptions.RequestDataMappingException;
 import com.billt.core.invoicereceiver.Model.InvoiceRequestBean;
@@ -49,6 +51,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
     @Autowired
     CustomerReadRepository customerReadRepository;
 
+
     private static final Logger LOG = LoggerFactory.getLogger(InvoiceServiceImpl.class);
 
     public ValidationResults validatePaymentRequest(InvoiceRequestBean requestData){
@@ -69,6 +72,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
      TransactionFlowRequestBean transactionFlowRequestBean = null;
        try {
            transactionFlowRequestBean = requestMapperService.mapToTransactionFlowBean(requestData);
+
 
            notificationPush.pushNewInvoice(transactionFlowRequestBean);
            String uemail = "";

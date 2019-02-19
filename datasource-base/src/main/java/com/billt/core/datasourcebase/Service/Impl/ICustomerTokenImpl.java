@@ -1,25 +1,16 @@
-package com.billt.core.invoicereceiver.Service.Impl;
+package com.billt.core.datasourcebase.Service.Impl;
 
-import com.billt.core.datasourcebase.entities.jpa.Customer;
+import com.billt.core.datasourcebase.Service.ICustomerTokenService;
 import com.billt.core.datasourcebase.entities.jpa.CustomerToken;
-import com.billt.core.datasourcebase.repositories.jpa.read.CustomerReadRepository;
 import com.billt.core.datasourcebase.repositories.jpa.read.CustomerTokenReadRepository;
 import com.billt.core.datasourcebase.repositories.jpa.write.CustomerTokenWriteRepository;
-import com.billt.core.datasourcebase.repositories.jpa.write.CustomerWriteRepository;
-import com.billt.core.invoicereceiver.Service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
-@Service("customerService")
-public class ICustomerImpl implements ICustomerService {
-
-    @Autowired
-    CustomerReadRepository customerReadRepository;
-
-    @Autowired
-    CustomerWriteRepository customerWriteRepository;
+@Service("customerTokenService")
+public class ICustomerTokenImpl implements ICustomerTokenService {
 
     @Autowired
     CustomerTokenReadRepository customerTokenReadRepository;
@@ -27,12 +18,6 @@ public class ICustomerImpl implements ICustomerService {
     @Autowired
     CustomerTokenWriteRepository customerTokenWriteRepository;
 
-    public void saveCustomer(Customer customer){
-
-        customerWriteRepository.save(customer);
-    }
-
-    /*
     @Override
     public void registerCustomerToken(CustomerToken customerToken) {
 
@@ -61,38 +46,7 @@ public class ICustomerImpl implements ICustomerService {
         }
 
         return customerToken;
-    }*/
-
-    public Customer checkIfCustomerExist(String mobile, String email){
-
-        Customer customer = null;
-
-        if(mobile != null){
-            customer = customerReadRepository.findCustomerByMobile(mobile);
-        }
-
-        if(customer == null && email != null){
-            customer = customerReadRepository.findCustomerByEmail(email);
-        }
-
-        return customer;
     }
-
-    public Customer checkIfCustomerExist(String custId){
-
-        Customer customer = null;
-
-        if(custId != null){
-            customer = customerReadRepository.findCustomerByCid(custId);
-        }
-
-
-        return customer;
-    }
-
-
-
-
 }
 
 

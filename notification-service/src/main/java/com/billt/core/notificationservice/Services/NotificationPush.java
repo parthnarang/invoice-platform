@@ -1,4 +1,6 @@
 package com.billt.core.notificationservice.Services;
+import com.billt.core.datasourcebase.Service.ICustomerTokenService;
+import com.billt.core.datasourcebase.entities.jpa.CustomerToken;
 import com.billt.core.datasourcebase.model.invoiceReceiver.TransactionFlowRequestBean;
 import com.billt.core.notificationservice.Models.NotificationRequestModel;
 import com.google.gson.Gson;
@@ -10,6 +12,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
@@ -21,6 +25,10 @@ import java.lang.reflect.Type;
 
 @Service
 public class NotificationPush {
+
+    @Autowired
+    @Qualifier(value="customerTokenService")
+    ICustomerTokenService iCustomerTokenService;
 
     private static final Logger LOG = LoggerFactory.getLogger(NotificationPush.class);
     @Async
@@ -42,7 +50,11 @@ public class NotificationPush {
         //notificationRequestModel.setData(notificationData);
         notificationRequestModel.setData(transactionFlowRequestBean);
         //Client Token goes here - change to read from DB
-        notificationRequestModel.setTo("dLTmYXux1PA:APA91bHyv_iU4sR89M-Vrh2RzsuQwZMb47su5O0EZTW6mK4MC3StBS_fiNUwDHaoo_nN0LpIPib2BIw2_13Hqo5EO9_Jys1jSm83LZ_oO8cHmD1QWawB5_lVAQGrHD7CRZdcOO1RQoUs");
+        String ctid = transactionFlowRequestBean.getCid();
+        CustomerToken customerToken = iCustomerTokenService.fetchCustomerToken(ctid);
+        String token = customerToken.getToken();
+        //String token = "dLTmYXux1PA:APA91bHyv_iU4sR89M-Vrh2RzsuQwZMb47su5O0EZTW6mK4MC3StBS_fiNUwDHaoo_nN0LpIPib2BIw2_13Hqo5EO9_Jys1jSm83LZ_oO8cHmD1QWawB5_lVAQGrHD7CRZdcOO1RQoUs"
+        notificationRequestModel.setTo(token);
 
 
         Gson gson = new Gson();

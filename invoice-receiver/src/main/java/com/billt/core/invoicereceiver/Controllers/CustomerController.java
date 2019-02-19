@@ -1,7 +1,10 @@
 package com.billt.core.invoicereceiver.Controllers;
 
+import com.billt.core.datasourcebase.Service.ICustomerTokenService;
 import com.billt.core.datasourcebase.collection.Invoice;
 import com.billt.core.datasourcebase.entities.jpa.Customer;
+import com.billt.core.datasourcebase.entities.jpa.CustomerToken;
+import com.billt.core.datasourcebase.repositories.jpa.write.CustomerTokenWriteRepository;
 import com.billt.core.datasourcebase.repositories.mongo.read.InvoiceReadRepository;
 import com.billt.core.invoicereceiver.Model.ResponseMessage;
 import com.billt.core.invoicereceiver.Service.ICustomerService;
@@ -18,6 +21,7 @@ import javax.swing.text.html.parser.Entity;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -31,6 +35,9 @@ public class CustomerController {
     @Qualifier(value="customerService")
     ICustomerService iCustomerService;
 
+    @Autowired
+    @Qualifier(value="customerTokenService")
+    ICustomerTokenService iCustomerTokenService;
 
 
     @GetMapping(path="fetchCustomerInvoices", produces = "application/json")
@@ -97,5 +104,11 @@ public class CustomerController {
         }
         return new ResponseEntity<String>(logoUrl,HttpStatus.OK);
     }
+
+    @PostMapping("SetCustomerToken")
+    public void SetCustomerToken(@RequestBody CustomerToken customerToken) {
+        iCustomerTokenService.registerCustomerToken(customerToken);
+    }
+
 
 }
