@@ -69,7 +69,7 @@ public class RequestMapperServiceImpl implements IRequestMapperService {
             transactionFlowRequestBean.setMobileNo(invoiceRequestBean.getMobileNo());
         }
 
-        transactionFlowRequestBean.setTransID("123y34747464362");
+        transactionFlowRequestBean.setTransID("89765ddd4422123");
         transactionFlowRequestBean.setBilltDate(new Date());
 
         return transactionFlowRequestBean;
@@ -104,8 +104,6 @@ public class RequestMapperServiceImpl implements IRequestMapperService {
 
         if(flowRequestBean.getCid()!= null)
             invoice.setCid(flowRequestBean.getCid());
-
-
 
 
         return invoice;

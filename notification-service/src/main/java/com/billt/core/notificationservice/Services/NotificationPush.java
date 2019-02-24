@@ -42,7 +42,7 @@ public class NotificationPush {
         //notificationRequestModel.setData(notificationData);
         notificationRequestModel.setData(transactionFlowRequestBean);
         //Client Token goes here - change to read from DB
-        notificationRequestModel.setTo("e0vdVDwLc10:APA91bEaHaY84JF4EvPZJIrSGgFGnV_3ZEutnwl0bbnc9rUxgf4pbA4qKPnJ-mPSeOyXeiRXFYsFbAEWklNRd49KcyQtyW_jYurvOnkJkPrgH81MMZw-1nZ76p8MipBvSUmxJCB31C2p");
+        notificationRequestModel.setTo("eBcfDUvuZ8g:APA91bG2hW9Calb-_dWW4lKELxsRQOjvPNPfAYRKfQvcSg8orKXzBvFHa7d5h1IkLklh6ZtnjTbNu0WkFxDZKoTvhitzkOz731dsCQXj1bZRAokOmWNeCnzFq-zhsB3iyIrO1UJ7xzlL");
 
 
         Gson gson = new Gson();

@@ -31,6 +31,9 @@ public class CustomerController {
     @Qualifier(value="customerService")
     ICustomerService iCustomerService;
 
+    @Autowired
+    MerchantService merchantService;
+
 
 
     @GetMapping(path="fetchCustomerInvoices", produces = "application/json")
@@ -89,8 +92,10 @@ public class CustomerController {
     }
 
     @GetMapping("GetMerchantLogo")
+    @ResponseBody
     public ResponseEntity<String> GetMerchantLogo(@RequestParam("mid") String mid){
-        MerchantService merchantService = new MerchantService();
+
+
         String logoUrl = merchantService.findMerchantLogoByMid(mid);
         if(logoUrl.compareTo("NULL") == 0){
             return new ResponseEntity<String>("",HttpStatus.BAD_REQUEST);
