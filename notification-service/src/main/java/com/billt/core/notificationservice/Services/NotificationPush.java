@@ -31,6 +31,7 @@ public class NotificationPush {
     ICustomerTokenService iCustomerTokenService;
 
     private static final Logger LOG = LoggerFactory.getLogger(NotificationPush.class);
+
     @Async
     public void pushNewInvoice(TransactionFlowRequestBean transactionFlowRequestBean) throws IOException{
 
