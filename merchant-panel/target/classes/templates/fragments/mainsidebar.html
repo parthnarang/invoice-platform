@@ -1,42 +1,65 @@
 <!-- sidebar: style can be found in sidebar.less -->
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org" layout:decorator="layout">
+
+
+<link rel="stylesheet" href="/css/custom.css"/>
+
 <section class="sidebar" xmlns:th="http://www.w3.org/1999/xhtml">
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu">
-        <li class="active treeview">
+
+        <li class="header-menu">
+            <span>General</span>
+        </li>
+
+
+        <li class="sidebar-dropdown">
             <a th:href="@{/panel/home}">
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
             </a>
         </li>
 
-        <li class="active treeview">
-
-            <li class="sidebar-menu">
+        <li class="sidebar-dropdown">
             <a th:href="@{/panel/invoice}">
                 <i class="fa fa-building"></i> <span>New Invoice</span>
-            </a></li>
-
-        <li class="sidebar-menu">
-            <a th:href="@{/panel/invoice}">
-                <i class="fa fa-building"></i> <span>New Invoice</span>
-            </a></li>
-
-
-        <li class="sidebar-menu">
-            <a th:href="@{/panel/invoice}">
-                <i class="fa fa-building"></i> <span>New Invoice</span>
-            </a></li>
-
-
-            </ul>
-        </li>
-
-        <li class="active treeview">
-            <a th:href="@{/panel/menu}">
-                <i class="fa fa-book"></i> <span>Menu</span>
             </a>
         </li>
 
-        <li class="active treeview">
+        <li class="sidebar-dropdown">
+            <a class ="abc" href="javascript:void(0);">
+                <i class="fa fa-book"></i> <span>Inventory Management</span>
+                <span class="glyphicon glyphicon-arrow-down" style="float:right;"></span>
+            </a>
+            <div class="sidebar-submenu" style="display:block;">
+            <ul class="fallback">
+                <li>
+                    <a th:href="@{/panel/menu/view-menu}">
+                        <i class="fa fa-building"></i> <span>View Inventory</span>
+                    </a></li>
+
+                <li>
+                    <a th:href="@{/panel/menu/bulk-upload}">
+                        <i class="fa fa-building"></i> <span>Bulk Upload</span>
+                    </a></li>
+
+
+                <li>
+                    <a th:href="@{/panel/menu/single-upload}">
+                        <i class="fa fa-building"></i> <span>Single Upload</span>
+                    </a></li>
+
+                <li>
+                    <a th:href="@{/panel/menu/edit-menu}">
+                        <i class="fa fa-building"></i> <span>Edit Inventory</span>
+                    </a></li>
+
+
+            </ul>
+            </div>
+        </li>
+
+        <li class="sidebar-dropdown">
             <a href="#">
                 <i class="fa fa-support"></i> <span>Help!</span>
             </a>

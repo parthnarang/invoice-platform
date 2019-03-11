@@ -29,10 +29,17 @@ public class Merchant {
     String mid;
     String merchantName;
     String merchantAddress;
+    String password;
+
+    @Transient
+    private String passwordConfirm;
+
     String merchantLogo;
     String email;
-    String contact1;
-    String contact2;
+    String contactList;
+    String gstNo;
+    String tinNo;
     Date createdOn;
     Date updatedOn;
+
 }

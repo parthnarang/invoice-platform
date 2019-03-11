@@ -7,7 +7,7 @@ import com.billt.core.invoicereceiver.Exceptions.RequestDataMappingException;
 import com.billt.core.invoicereceiver.Model.InvoiceRequestBean;
 import com.billt.core.invoicereceiver.Service.ICustomerService;
 import com.billt.core.invoicereceiver.Service.IRequestMapperService;
-import com.billt.core.invoicereceiver.Service.MerchantService;
+import com.billt.core.datasourcebase.services.MerchantService;
 import com.billt.core.invoicereceiver.enums.ResponseCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
