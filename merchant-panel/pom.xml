@@ -8,6 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../</relativePath>
     </parent>
+
     <groupId>com.billt.core</groupId>
     <artifactId>merchant-panel</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -72,7 +73,13 @@
             <groupId>com.billt.core</groupId>
             <artifactId>datasource-base</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
+                <dependency>
+                    <groupId>com.billt.core</groupId>
+                    <artifactId>datasource-base</artifactId>
+                    <version>0.0.1-SNAPSHOT</version>
+                </dependency>
     </dependencies>
 
 
