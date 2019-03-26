@@ -41,6 +41,7 @@ public class MenuService {
     
     public void addNewmenuItem(MenuItem menuItem){
 
+        //test
         if (menuItem == null  || StringUtils.isEmpty(menuItem.getName())
               ||  StringUtils.isEmpty(menuItem.getCategory())
               || StringUtils.isEmpty(menuItem.getPrice())) {
