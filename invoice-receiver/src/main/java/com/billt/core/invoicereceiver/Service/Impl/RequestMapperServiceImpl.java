@@ -1,14 +1,16 @@
 package com.billt.core.invoicereceiver.Service.Impl;
 
+import com.billt.core.datasourcebase.Service.IOrderService;
 import com.billt.core.datasourcebase.collection.Invoice;
 import com.billt.core.datasourcebase.entities.jpa.Customer;
+import com.billt.core.datasourcebase.entities.jpa.Orders;
 import com.billt.core.datasourcebase.model.invoiceReceiver.TransactionFlowRequestBean;
 import com.billt.core.datasourcebase.repositories.mongo.write.InvoiceWriteRepository;
 import com.billt.core.invoicereceiver.Exceptions.RequestDataMappingException;
 import com.billt.core.invoicereceiver.Model.InvoiceRequestBean;
 import com.billt.core.invoicereceiver.Service.ICustomerService;
 import com.billt.core.invoicereceiver.Service.IRequestMapperService;
-import com.billt.core.invoicereceiver.Service.MerchantService;
+import com.billt.core.datasourcebase.services.MerchantService;
 import com.billt.core.invoicereceiver.enums.ResponseCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Random;
 
 
 @Service("requestmappperservice")
@@ -33,6 +36,10 @@ public class RequestMapperServiceImpl implements IRequestMapperService {
     @Autowired
     @Qualifier(value ="customerService")
     ICustomerService customerService;
+
+    @Autowired
+    @Qualifier(value = "orderService")
+    IOrderService iOrderService;
 
 
     public TransactionFlowRequestBean mapToTransactionFlowBean(InvoiceRequestBean invoiceRequestBean) throws RequestDataMappingException {
@@ -78,14 +85,20 @@ public class RequestMapperServiceImpl implements IRequestMapperService {
             transactionFlowRequestBean.setMobileNo(invoiceRequestBean.getMobileNo());
         }
 
+        String transacId = constructTransactionId();
+
+        transactionFlowRequestBean.setTransID(transacId);
+        transactionFlowRequestBean.setBilltDate(new Date());
+
         //Invoice invoice = invoiceWriteRepository.findTopByOrderByCreatedDesc();
-        String transId = "123";
-        /*invoice.getTransID();*/
-        long transacId = Long.parseLong(transId)+1;
+        /*String transId = "123";
+        /*invoice.getTransID();
+        long transacId = Long.parseLong(transId)+1;*/
+        Orders orders = constructOrderEntry(transactionFlowRequestBean.getMid(),transactionFlowRequestBean.getOrderId(),transacId);
+        iOrderService.registerOrder(orders);
 
         //transactionFlowRequestBean.setTransID("123y34747464362");
-        transactionFlowRequestBean.setTransID(String.valueOf(transacId));
-        transactionFlowRequestBean.setBilltDate(new Date());
+
 
         return transactionFlowRequestBean;
     }
@@ -127,5 +140,26 @@ public class RequestMapperServiceImpl implements IRequestMapperService {
 
         return invoice;
 
+    }
+
+    private Orders constructOrderEntry(String mid, String orderId,String transacactionId){
+        Orders orders = new Orders();
+        orders.setCreatedOn(new Date());
+        orders.setMid(mid);
+        if(orderId != null){
+            orders.setOrderId(orderId);
+        }
+        orders.setUpdatedOn(new Date());
+
+        orders.setTransactionId(transacactionId);
+        return orders;
+    }
+
+    private String constructTransactionId(){
+        long transactionId = System.currentTimeMillis();
+        Random random = new Random();
+        int rval = random.nextInt(1000000) + 1000000;
+        String result = String.valueOf(transactionId) + String.valueOf(rval);
+        return result;
     }
 }

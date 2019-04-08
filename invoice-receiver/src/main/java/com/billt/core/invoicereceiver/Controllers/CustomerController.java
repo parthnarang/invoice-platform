@@ -8,8 +8,7 @@ import com.billt.core.datasourcebase.repositories.jpa.write.CustomerTokenWriteRe
 import com.billt.core.datasourcebase.repositories.mongo.read.InvoiceReadRepository;
 import com.billt.core.invoicereceiver.Model.ResponseMessage;
 import com.billt.core.invoicereceiver.Service.ICustomerService;
-import com.billt.core.invoicereceiver.Service.MerchantService;
-import org.json.JSONObject;
+import com.billt.core.datasourcebase.services.MerchantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletException;
-import javax.swing.text.html.parser.Entity;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,8 +34,13 @@ public class CustomerController {
     ICustomerService iCustomerService;
 
     @Autowired
+    MerchantService merchantService;
+
+    @Autowired
     @Qualifier(value="customerTokenService")
     ICustomerTokenService iCustomerTokenService;
+
+
 
 
     @GetMapping(path="fetchCustomerInvoices", produces = "application/json")
@@ -96,8 +99,10 @@ public class CustomerController {
     }
 
     @GetMapping("GetMerchantLogo")
+    @ResponseBody
     public ResponseEntity<String> GetMerchantLogo(@RequestParam("mid") String mid){
-        MerchantService merchantService = new MerchantService();
+
+
         String logoUrl = merchantService.findMerchantLogoByMid(mid);
         if(logoUrl.compareTo("NULL") == 0){
             return new ResponseEntity<String>("",HttpStatus.BAD_REQUEST);

@@ -1,0 +1,73 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+
+<head>
+    <title>Single item upload</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+          integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+          crossorigin="anonymous"/>
+</head>
+
+
+<body>
+
+<section layout:fragment="content">
+<!--
+    <div class="container" th:object="${newIssue}">
+        <div th:if="${newIssue.isError}">
+            <div class="alert alert-danger" th:text="${newIssue.message}" ></div>
+        </div>
+        <div th:if="${newIssue.isError}==false">
+            <div class="alert alert-success" th:text="${newIssue.message}"></div>
+        </div>
+
+    </div>-->
+
+    <form th:action="@{/panel/menu/addMenuItem}"  method="post" th:object="${menuItem}">
+        <div class="container">
+            <fieldset>
+                <legend>Add Item Details</legend>
+<h1 th:text="${menuItem.category}"></h1>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label >Item Name:</label>
+                            <input type="text" class="form-control" name="subject" size="20" th:field="${menuItem.name}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Category:</label>
+                            <input type="text" class="form-control" name="category" size="20" th:field="${menuItem.category}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Price(in Rs):</label>
+                            <input type="text" class="form-control" name="price" size="20" th:field="${menuItem.price}">
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <button type="submit" class="btn btn-success">Submit</button>
+
+            </fieldset>
+        </div>
+    </form>
+    <br><br>
+
+    <br>
+    <br>
+</section>
+</body>
+</html>
+

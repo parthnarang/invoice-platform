@@ -1,8 +1,8 @@
 package com.billt.core.datasourcebase.Service;
 
-import com.billt.core.datasourcebase.entities.jpa.Order;
+import com.billt.core.datasourcebase.entities.jpa.Orders;
 
 public interface IOrderService {
-    public void registerOrder(String mid);
-    public Order fetchOrder(String mid);
+    public void registerOrder(Orders orders);
+    public Orders fetchOrder(String mid);
 }

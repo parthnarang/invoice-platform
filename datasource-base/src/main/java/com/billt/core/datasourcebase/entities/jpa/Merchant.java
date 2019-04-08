@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 /**
@@ -26,18 +27,35 @@ public class Merchant {
     long id;
 
     @Column(unique = true)
-    String mid;
-    String merchantName;
-    String merchantAddress;
-    String merchantLogo;
-    String email;
-    String contact1;
-    String gstNo;
-    String tinNo;
-    String cgst;
-    String sgst;
-    String serviceCharge;
-    String vat;
-    Date createdOn;
-    Date updatedOn;
+    private String mid;
+
+    @NotEmpty(message = "Please provide store name")
+    private String merchantName;
+
+    @NotEmpty(message = "Please provide store address")
+    private String merchantAddress;
+
+    private String password;
+
+    @Transient
+    private String passwordConfirm;
+
+    private String merchantLogo;
+
+    @NotEmpty(message = "Please provide an e-mail")
+    private String email;
+
+    private String confirmationToken;
+
+    private String contactList;
+    private String gstNo;
+    private String tinNo;
+    private Date createdOn;
+    private Date updatedOn;
+
+
+    private String cgst;
+    private String sgst;
+    private String serviceCharge;
+    private String vat;
 }

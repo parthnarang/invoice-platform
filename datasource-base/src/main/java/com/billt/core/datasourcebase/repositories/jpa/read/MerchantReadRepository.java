@@ -9,5 +9,9 @@ public interface MerchantReadRepository extends JpaRepository<Merchant, String> 
 
     Merchant findAllByMid(@Param("mid") String mid);
 
+    Merchant findByEmail(@Param("email") String email);
+
+    Merchant findByConfirmationToken(String confirmationToken);
+
 }
 

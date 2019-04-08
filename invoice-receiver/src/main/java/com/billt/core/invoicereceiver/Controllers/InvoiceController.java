@@ -2,10 +2,8 @@ package com.billt.core.invoicereceiver.Controllers;
 
 
 import com.billt.core.datasourcebase.Service.IOrderService;
-import com.billt.core.datasourcebase.entities.jpa.Merchant;
-import com.billt.core.datasourcebase.entities.jpa.Order;
+import com.billt.core.datasourcebase.entities.jpa.Orders;
 import com.billt.core.datasourcebase.model.invoiceReceiver.InvoiceItem;
-import com.billt.core.datasourcebase.repositories.jpa.read.MerchantReadRepository;
 import com.billt.core.invoicereceiver.Model.InvoiceRequestBean;
 import com.billt.core.invoicereceiver.Service.IInvoiceService;
 import com.billt.core.invoicereceiver.enums.ResponseCode;
@@ -132,9 +130,9 @@ public class InvoiceController {
             if(jsonObject.has(VID))
                 invoiceRequestBean.setVid(jsonObject.getString(VID));
             if(jsonObject.has(ORDER_ID)) {
-                //invoiceRequestBean.setOrderId(jsonObject.getString(ORDER_ID));
-                Order order = iOrderService.fetchOrder(jsonObject.getString(MID));
-                invoiceRequestBean.setOrderId(order.getOrderId());
+                invoiceRequestBean.setOrderId(jsonObject.getString(ORDER_ID));
+                //Orders orders = iOrderService.fetchOrder(jsonObject.getString(MID));
+                //invoiceRequestBean.setOrderId(orders.getOrderId());
             }
             if(jsonObject.has(CHECKSUMHASH))
                 invoiceRequestBean.setChecksumhash(jsonObject.getString(CHECKSUMHASH));

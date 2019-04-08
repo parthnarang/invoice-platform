@@ -23,17 +23,17 @@ import java.util.List;
 @Service
 public class MenuService {
 
-   // @Autowired
-   // MenuItemWriteRepository menuItemWriteRepository;
+   @Autowired
+   MenuItemWriteRepository menuItemWriteRepository;
 
     @Autowired
     MenuItemReadRepository menuItemReadRepository;
 
     private static final Logger log = LoggerFactory.getLogger(MenuService.class);
 
-    private static final String ITEM_NAME="Item";
-    private static final String CATEGORY="Category";
-    private static final String PRICE = "Price";
+    private static final String ITEM_NAME="Item Name";
+    private static final String CATEGORY="Item category";
+    private static final String PRICE = "Price(in Rs)";
 
 
     public static final String[] MENU_HEADER={ITEM_NAME,CATEGORY,PRICE};
@@ -59,7 +59,7 @@ public class MenuService {
             menuItemEntity1.setName(menuItem.getName());
             menuItemEntity1.setPrice(menuItem.getPrice());
 
-            //menuItemWriteRepository.save(menuItemEntity1);
+            menuItemWriteRepository.save(menuItemEntity1);
 
 
         

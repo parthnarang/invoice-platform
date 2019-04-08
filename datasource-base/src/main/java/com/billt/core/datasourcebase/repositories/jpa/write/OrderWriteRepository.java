@@ -1,7 +1,7 @@
 package com.billt.core.datasourcebase.repositories.jpa.write;
 
-import com.billt.core.datasourcebase.entities.jpa.Order;
+import com.billt.core.datasourcebase.entities.jpa.Orders;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface OrderWriteRepository extends JpaRepository<Order, Long> {
+public interface OrderWriteRepository extends JpaRepository<Orders, Long> {
 }
