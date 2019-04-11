@@ -12,6 +12,7 @@ com\billt\core\merchantpanel\repositories\read\MenuItemReadRepository.class
 com\billt\core\merchantpanel\model\MenuItem.class
 com\billt\core\merchantpanel\service\SmsInvoiceService.class
 com\billt\core\merchantpanel\Constants\MerchantPanelConstants.class
+com\billt\core\merchantpanel\service\MerchantService.class
 com\billt\core\merchantpanel\Entities\CategoryEntity.class
 com\billt\core\merchantpanel\Helper\FreeMarkerHelper.class
 com\billt\core\merchantpanel\controller\HomePageController.class

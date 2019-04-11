@@ -1,13 +1,10 @@
 package com.billt.core.invoicereceiver.Service.Impl;
 
-import com.billt.core.datasourcebase.services.MerchantService;
+import com.billt.core.datasourcebase.Service.MerchantService;
 import com.billt.core.datasourcebase.Service.IUrlMapperService;
 import com.billt.core.datasourcebase.collection.Invoice;
 import com.billt.core.datasourcebase.entities.jpa.Customer;
-import com.billt.core.datasourcebase.entities.jpa.Merchant;
 import com.billt.core.datasourcebase.repositories.jpa.read.CustomerReadRepository;
-import com.billt.core.datasourcebase.repositories.jpa.read.MerchantReadRepository;
-import com.billt.core.datasourcebase.repositories.jpa.write.UrlWriteRepository;
 import com.billt.core.datasourcebase.repositories.mongo.write.InvoiceWriteRepository;
 import com.billt.core.invoicereceiver.Exceptions.RequestDataMappingException;
 import com.billt.core.invoicereceiver.Model.InvoiceRequestBean;
@@ -19,17 +16,11 @@ import com.billt.core.notificationservice.Helpers.EmailHelper;
 import com.billt.core.notificationservice.Helpers.SmsHelper;
 import com.billt.core.notificationservice.Services.EmailSender;
 import com.billt.core.notificationservice.Services.NotificationPush;
-import org.apache.commons.lang.RandomStringUtils;
-import org.apache.velocity.VelocityContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
-import java.util.Random;
-
-import static com.constants.CommunicationConstants.*;
 
 
 @Service("invoiceService")

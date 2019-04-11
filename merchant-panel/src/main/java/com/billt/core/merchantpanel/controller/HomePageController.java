@@ -1,7 +1,7 @@
 package com.billt.core.merchantpanel.controller;
 
 import com.billt.core.datasourcebase.entities.jpa.Merchant;
-import com.billt.core.datasourcebase.services.MerchantService;
+import com.billt.core.merchantpanel.service.MerchantService;
 import com.billt.core.merchantpanel.service.Impl.SecurityServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
