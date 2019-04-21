@@ -1,15 +1,8 @@
 package com.billt.core.invoicereceiver.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.apache.commons.lang.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author amit.dubey
@@ -32,42 +25,43 @@ public class RegistrationRequestBody {
     @NotBlank(message = "{notblank}")
     private String lastName;
 
+    @NotBlank(message = "{notblank}")
+    private String email;
+
+    @NotBlank(message = "{notblank}")
+    private String phoneNo;
+
     public String getFirstName() {
-        return firstName;
+        return this.firstName;
     }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-
     public String getLastName() {
-        return lastName;
+        return this.lastName;
     }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-
-    /*
-    /**
-     * @return the createdTime
-     */
-    /*
-    public String getCreatedTime() {
-        return createdTime;
+    public String getEmail(){
+        return this.email;
     }
 
-    /**
-     * @param createdTime
-     * the createdTime to set
-     */
-    /*
-    public void setCreatedTime(String createdTime) {
-        this.createdTime
-                */
-
+    public void setEmail(String email){
+        this.email = email;
     }
+
+    public String getPhoneNo(){
+        return this.phoneNo;
+    }
+
+    public void setPhoneNo(String phoneNo){
+        this.phoneNo = phoneNo;
+    }
+}
 
 

@@ -21,7 +21,8 @@ public class Customer {
     @Column(unique = true)
     String cid;
 
-    String name;
+    String firstName;
+    String lastName;
     String email;
     String mobile;
 
