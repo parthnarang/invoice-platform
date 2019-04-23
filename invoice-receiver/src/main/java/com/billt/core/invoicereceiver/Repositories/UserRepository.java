@@ -17,7 +17,6 @@ public interface UserRepository  extends MongoRepository<User,String>{
     public User findByMobile(String mobile);
     public User findByEmail(String email);
 
-
     /*MongoTemplate mongoTemplate;
 
     @Autowired

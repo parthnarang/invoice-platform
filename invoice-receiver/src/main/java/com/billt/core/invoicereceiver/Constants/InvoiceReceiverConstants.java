@@ -21,12 +21,6 @@ public class InvoiceReceiverConstants {
     public static final String TOTAL_AMT = "total_amt";
     public static final String VAT = "vat";
     public static final String NET = "net";
-    public static final String CGST = "cgst";
-    public static final String SGST = "sgst";
-    public static final String DISCOUNT = "discount";
-    public static final String SERVICE_CHARGE = "service_charge";
-    public static final String TIN = "tin";
-    public static final String SUBTOTAL = "subtotal";
 
 
     //validation parameters

@@ -18,6 +18,16 @@
 
 <section layout:fragment="content">
 
+    <div class="container" th:object="${menuItem}">
+        <div th:if="${menuItem.isError}">
+            <div class="alert alert-danger" th:text="${menuItem.message}" ></div>
+        </div>
+        <div th:if="${menuItem.isError}==false">
+            <div class="alert alert-success" th:text="${menuItem.message}"></div>
+        </div>
+
+    </div>
+
     <h1> Bulk Inventory upload</h1>
 
 

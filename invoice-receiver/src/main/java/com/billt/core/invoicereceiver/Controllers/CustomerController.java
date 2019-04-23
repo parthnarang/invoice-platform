@@ -1,32 +1,25 @@
 package com.billt.core.invoicereceiver.Controllers;
 
-import com.billt.core.datasourcebase.Service.ICustomerTokenService;
 import com.billt.core.datasourcebase.collection.Invoice;
 import com.billt.core.datasourcebase.entities.jpa.Customer;
-import com.billt.core.datasourcebase.entities.jpa.CustomerToken;
 import com.billt.core.datasourcebase.repositories.mongo.read.InvoiceReadRepository;
 import com.billt.core.invoicereceiver.Model.ResponseMessage;
 import com.billt.core.invoicereceiver.Service.ICustomerService;
-import com.billt.core.datasourcebase.Service.MerchantService;
-import com.billt.core.invoicereceiver.utils.Response;
+import com.billt.core.datasourcebase.services.MerchantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletException;
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 @RestController
 @RequestMapping("/Mobile/rest/")
 public class CustomerController {
-
-    public static final String uploadingDir = System.getProperty("user.dir") + "/uploadingDir/";
 
     @Autowired
     InvoiceReadRepository invoiceReadRepository;
@@ -38,11 +31,6 @@ public class CustomerController {
     @Autowired
     MerchantService merchantService;
 
-    @Autowired
-    @Qualifier(value="customerTokenService")
-    ICustomerTokenService iCustomerTokenService;
-
-
 
 
     @GetMapping(path="fetchCustomerInvoices", produces = "application/json")
@@ -51,46 +39,6 @@ public class CustomerController {
       return invoices;
 
 
-    }
-
-    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-    public String uploadingPost(@RequestParam("uploadingFiles") MultipartFile[] uploadingFiles) throws IOException {
-        for(MultipartFile uploadedFile : uploadingFiles) {
-            File file = new File(uploadingDir + uploadedFile.getOriginalFilename());
-            uploadedFile.transferTo(file);
-        }
-
-        return "redirect:/";
-    }
-
-    @GetMapping(path="feedback", produces = "application/json")
-    public Response getFeedback()  {
-        Response response = new Response();
-        response.setStatus(true);
-        response.setCode(200);
-        response.setMessage("Success");
-        response.setContent("Your feedback is essential to us.");
-        return response;
-    }
-
-    @GetMapping(path="privacyPolicy", produces = "application/json")
-    public Response getPrivacyPolicy()  {
-        Response response = new Response();
-        response.setStatus(true);
-        response.setCode(200);
-        response.setMessage("Success");
-        response.setContent("Your privacy is essential to us.");
-        return response;
-    }
-
-    @GetMapping(path="aboutUs", produces = "application/json")
-    public Response getAboutUs()  {
-        Response response = new Response();
-        response.setStatus(true);
-        response.setCode(200);
-        response.setMessage("Success");
-        response.setContent("Our About Us is essential to us.");
-        return response;
     }
 
     @RequestMapping(value= {"signup"}, method=RequestMethod.POST)
@@ -150,11 +98,6 @@ public class CustomerController {
             return new ResponseEntity<String>("",HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<String>(logoUrl,HttpStatus.OK);
-    }
-
-    @PostMapping("SetCustomerToken")
-    public void SetCustomerToken(@RequestBody CustomerToken customerToken) {
-        iCustomerTokenService.registerCustomerToken(customerToken);
     }
 
 

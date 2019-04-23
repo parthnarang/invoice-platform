@@ -1,14 +1,10 @@
 package com.billt.core.merchantpanel.service.Impl;
 
-import com.billt.core.datasourcebase.entities.jpa.Merchant;
-import com.billt.core.datasourcebase.repositories.jpa.read.MerchantReadRepository;
 import com.billt.core.merchantpanel.service.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class UserServiceImpl implements IUserService {
 
-    @Autowired
+/*    @Autowired
     private MerchantReadRepository merchantReadRepository;
 
     @Autowired
@@ -23,5 +19,5 @@ public class UserServiceImpl implements IUserService {
     @Override
     public Merchant findByUsername(String username) {
         return merchantReadRepository.findByEmail(username);
-    }
+    }*/
 }

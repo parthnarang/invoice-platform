@@ -55,10 +55,14 @@
         <input class="form-control" id="myInput" type="text" placeholder="Search..">
         <br>
         <ul class="list-group" id="myList" style="display: none;">
-            <li class="list-group-item"><span>First item</li>
+            <li th:each="menuItem: ${menuList}" class="list-group-item">
+                <span th:text="${menuItem.name}"></span>
+            </li>
+       <!--     <li class="list-group-item"><span>First item</span></li>
             <li class="list-group-item">Second item</li>
             <li class="list-group-item">Third item</li>
-            <li class="list-group-item">Fourth</li>
+            <li class="list-group-item">Fourth</li>-->
+
         </ul>
     </div>
 
@@ -66,21 +70,22 @@
         <div style="margin-left: 8px;">
             <div class="invoice-wrap">
                 <div class="invoice-inner">
+                    <form  th:action="@{/panel/postNewInvoice}" method="post" th:object="${invoice}" >
                     <table border="0" cellpadding="0" cellspacing="0" width="100%">
                         <tbody>
                         <tr>
-                            <td >
+                            <td >Product XYZ
                                 <div class="business_info">
                                     <table border="0" cellpadding="0" cellspacing="0" width="100%">
                                         <tbody>
                                         <tr>
                                             <td><div class="reset_editor invoice-input mce-content-body" id="business_info_editor"
                                                      style="text-align: center; vertical-align: middle;" contenteditable="true" spellcheck="false">
-                                                <p style="font-size: 14pt;" data-mce-style="font-size: 14pt;" id="business_name">STATION BAR</p>
-                                                <p id="business_address">F-60,2nd Floor,Malhotra Building,Cannaugt Place,New Delhi-110001</p>
-                                               <span>Ph No:-</span> <p style="display:inline" id="Phone no">011-23359995,2335996</p><br>
-                                                <span>Tin No:-</span><p style="display:inline" id="tin_no">07316926409</p><br>
-                                                <span>GST No:-</span> <p style="display:inline" id ="gst_no">07AAECT8895M1ZD</p><br>
+                                                <p style="font-size: 14pt;" data-mce-style="font-size: 14pt;" th:field="*{merchantName}" id="business_name" th:text="${invoice.merchantName}"></p>
+                                                <p id="business_address" th:field="*{address}" th:text="${invoice.address}"></p>
+                                               <span>Ph No:-</span> <p style="display:inline" id="Phone no" th:field="*{phoneNoList}" th:text="${invoice.phoneNoList}" ></p><br>
+                                                <span>Tin No:-</span><p style="display:inline" id="tin_no" th:field="*{gst}" th:text="${invoice.gst}"></p><br>
+                                                <span>GST No:-</span> <p style="display:inline" id ="gst_no" th:field="*{tinNo}" th:text="${invoice.tinNo}"></p><br>
 
                                             </div></td>
                                         </tr>
@@ -109,10 +114,9 @@
                                                                 <textarea id ="client_info" rows="7" class="invoice-input" style="display: none; overflow: hidden; overflow-wrap: break-word; resize: none; height: 108px;">
 
                                                                 </textarea><div class="reset_editor invoice-input mce-content-body" id="client_info_editor" contenteditable="true"
-                                                                                style="width: 200px; min-height: 80px; position: relative;" spellcheck="false">
+                                                                                style="width: 300px; min-height: 80px; position: relative;" spellcheck="false">
                                                                 <span class ="heading">ORD No: </span> <p style="display:inline" id="ord_no">4171818371</p><br><br>
-                                                                <span class ="heading">Date: </span><p style="display:inline" id="date">27/01/2019</p><br><br>
-                                                                <span class ="heading">Time: </span> <p style="display:inline" id ="time">1:56 PM</p><br>
+                                                                <span class ="heading">Time: </span><p style="display:inline" id="date_time"></p><br><br>
                                                             </div></td>
                                                         </tr>
                                                         </tbody>
@@ -177,49 +181,42 @@
                         <tr class="totals-row" id="discountRow">
                             <td class="wide-cell" colspan="2"></td>
                             <td><strong><strong><span>Discount</span></strong></strong>
-                            </td><td colspan="2"><input type="text" id="discount" value="0" class="invoice-input" style="font-weight: bold; ">
+                            </td><td colspan="2"><input type="text" id="discount" th:field="*{discount}" value="0" class="invoice-input" style="font-weight: bold; ">
                         </td></tr>
 
                         <tr class="totals-row" id="cgst">
                             <td class="wide-cell" colspan="2">
-                            <td><strong><span id="total">CGST</span></strong>
-                            </td><td colspan="2"><input type="text" id="label_cgst" value="0" class="invoice-input" style="font-weight: bold;">
+                            <td><strong><span>CGST</span></strong>
+                            </td><td colspan="2"><input type="text" id="label_cgst"  th:field="*{cgst}" value="0" class="invoice-input" style="font-weight: bold;">
                         </td></tr>
                         <tr class="totals-row" id="sgst">
                             <td class="wide-cell" colspan="2"></td>
-                            <td><strong><span id="total">SGST</span></strong>
-                            </td><td colspan="2"><input type="text" id="label_sgst" value="0" class="invoice-input" style="font-weight: bold;">
+                            <td><strong><span>SGST</span></strong>
+                            </td><td colspan="2"><input type="text" th:field="*{sgst}"  id="label_sgst" value="0" class="invoice-input" style="font-weight: bold;">
                         </td></tr>
 
                         <tr class="totals-row" id="vat">
                             <td class="wide-cell" colspan="2"></td>
-                            <td><strong><span id="total">VAT</span></strong>
-                            </td><td colspan="2"><input type="text" id="label_vat" value="0" class="invoice-input" style="font-weight: bold;">
+                            <td><strong><span>VAT</span></strong>
+                            </td><td colspan="2"><input type="text" id="label_vat" th:field="*{vat}"  value="0" class="invoice-input" style="font-weight: bold;">
                         </td></tr>
 
                         <tr class="totals-row" id="total">
                             <td class="wide-cell" colspan="2"></td>
-                            <td><strong><span id="total">TOTAL</span></strong>
-                            </td><td colspan="2"><input type="text" id="label_total" value="0" class="invoice-input" style="font-weight: bold;">
+                            <td><strong><span>TOTAL</span></strong>
+                            </td><td colspan="2"><input type="text" id="label_total" th:field="*{net}"  value="0" class="invoice-input" style="font-weight: bold;">
                         </td></tr>
 
                         </tfoot>
 
                         <tbody id="ItemsTable">
                         <tr description="Product XYZ" qty="1" unit_price="10" discount="0" subtotal="10" total="10" class="item-row">
-                            <td><textarea data-key="description" class="editable input-block-level" type="text" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 40px;">Product XYZ</textarea></td>
-                            <td><input data-key="qty" class="editable input-mini" value="1" size="3"></td>
+                            <td><textarea data-key="description" class="editable input-block-level" type="text" th:field="*{invoiceItems[0].DESCRIPTION}" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 40px;" >Product XYZ</textarea></td>
+                            <td><input data-key="qty" class="editable input-mini" value="1" size="3" ></td>
                             <td><input data-key="unit_price" class="editable input-mini" value="5" size="5" ><span style="display:inline"> Rs</span> </td>
                             <td><input data-key="unit_price" class="editable input-mini" value="5" size="5"><span style="display:inline"> Rs</span></td>
                             <td><btn href="#" class="btn btn-danger btn-sm remove-item"><i class="fa fa-trash icon-white"></i></btn></td>       </tr>
 
-                        <tr description="Product EFG" qty="1" unit_price="10" discount="0" subtotal="10" total="10" class="item-row">
-                            <td><textarea data-key="description" class="editable input-block-level" type="text" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 40px;">Product XYZ</textarea></td>
-                            <td><input data-key="qty" class="editable input-mini" value="1" size="3"></td>
-                            <td><input data-key="unit_price" class="editable input-mini" value="5" size="5" ><span style="display:inline"> Rs</span> </td>
-                            <td><input data-key="unit_price" class="editable input-mini" value="5" size="5"><span style="display:inline"> Rs</span></td>
-
-                            <td><btn href="#" class="btn btn-danger btn-sm remove-item"><i class="fa fa-trash icon-white"></i></btn></td>       </tr></tbody>
 
 
 
@@ -240,7 +237,8 @@
                     <br>
 
 
-                    <button type="button" class="btn btn-success" style="float: right">Send to Customer</button>
+                    <button type="submit" class="btn btn-success" style="float: right">Send to Customer</button>
+                    </form>
                     <br>
 <!--                    <br>
                     <br>
@@ -252,6 +250,8 @@
 </section>
 
 <script type="text/javascript" src="/js/invoice.js"></script>
+<script type="text/javascript" src="/js/date_time.js"></script>
+<script type="text/javascript">window.onload = date_time('date_time');</script>
 
 </body>
 </html>

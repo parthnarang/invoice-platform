@@ -13,5 +13,7 @@ public interface MerchantReadRepository extends JpaRepository<Merchant, String> 
 
     Merchant findByConfirmationToken(String confirmationToken);
 
+    Merchant findById(@Param("id") long id);
+
 }
 

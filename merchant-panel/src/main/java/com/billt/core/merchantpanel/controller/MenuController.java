@@ -1,11 +1,23 @@
 package com.billt.core.merchantpanel.controller;
 
+import com.billt.core.datasourcebase.entities.jpa.Merchant;
+import com.billt.core.datasourcebase.repositories.jpa.read.MerchantReadRepository;
+import com.billt.core.merchantpanel.Entities.CategoryEntity;
+import com.billt.core.merchantpanel.Entities.MenuItemEntity;
+import com.billt.core.merchantpanel.Utils.MenuUtil;
+import com.billt.core.merchantpanel.model.Category;
 import com.billt.core.merchantpanel.model.MenuItem;
 import com.billt.core.merchantpanel.model.MenuWrapper;
+import com.billt.core.merchantpanel.service.Impl.MenuCategoryService;
+import com.billt.core.merchantpanel.service.Impl.SecurityServiceImpl;
 import com.billt.core.merchantpanel.service.MenuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,64 +38,45 @@ public class MenuController {
     @Autowired
     MenuService menuService;
 
+    @Autowired
+    SecurityServiceImpl securityService;
+
+    @Autowired
+    private MerchantReadRepository merchantReadRepository;
+
+    @Autowired
+    MenuCategoryService menuCategoryService;
+
 
     @PostMapping("menu/addMenuIteminBulk")
     public String addMenuIteminBulk(@ModelAttribute MenuItem menuItem) {
         menuService.menuFileRead(menuItem);
-        return "AlertSystem/addNewIssue";
+        return "AlertSystem/add";
     }
 
     @PostMapping("menu/addMenuItem")
-    public String addMenuItem(@ModelAttribute MenuItem menuItem) {
+    public String addMenuItem(Model model,@ModelAttribute MenuItem menuItem) {
 
+        menuItem.setIsError(false);
+        menuItem.setMessage("uploaded successfully");
         log.info("Receiving request to create menu item");
-        menuService.addNewmenuItem(menuItem);
-        log.info("Creation for request is done");
-        return "success";
+
+        if (MenuUtil.isNumeric(menuItem.getPrice())){
+            menuService.addNewmenuItem(menuItem,findLoggedInMerchant());
+        } else {
+            menuItem.setIsError(true);
+            menuItem.setMessage("Price is not valid , enter numeric values only");
+        }
+
+
+        model.addAttribute("con", "single-upload");
+        return "layout";
     }
 
    @GetMapping("menu/view-menu")
     public String viewMenu(Model model) {
-       HashMap<String, List<String>> map = new HashMap<>();
 
-       ArrayList<String> arrayList1 = new ArrayList<>();
-       arrayList1.add("Aloo and Dal ki Tikki");
-       arrayList1.add("Cheese Balls");
-       arrayList1.add("Veg Crispy");
-       arrayList1.add("Aloo and Dal ki Tikki");
-
-       ArrayList<String> arrayList2 = new ArrayList<>();
-       arrayList2.add("Aloo and Dal ki Tikki");
-       arrayList2.add("Cheese Balls");
-       arrayList2.add("Veg Crispy");
-       arrayList2.add("Aloo and Dal ki Tikki");
-
-       ArrayList<String> arrayList3 = new ArrayList<>();
-       arrayList3.add("Aloo and Dal ki Tikki");
-       arrayList3.add("Cheese Balls");
-       arrayList3.add("Veg Crispy");
-       arrayList3.add("Aloo and Dal ki Tikki");
-
-       ArrayList<String> arrayList4 = new ArrayList<>();
-       arrayList4.add("Aloo and Dal ki Tikki");
-       arrayList4.add("Cheese Balls");
-       arrayList4.add("Veg Crispy");
-       arrayList4.add("Aloo and Dal ki Tikki");
-
-       ArrayList<String> arrayList5 = new ArrayList<>();
-       arrayList5.add("Aloo and Dal ki Tikki");
-       arrayList5.add("Cheese Balls");
-       arrayList5.add("Veg Crispy");
-       arrayList5.add("Aloo and Dal ki Tikki");
-
-       map.put("Starters",arrayList1);
-       map.put("Main course",arrayList2);
-       map.put("Beverages",arrayList3);
-       map.put("Salads",arrayList4);
-       map.put("Desserts",arrayList5);
-
-
-
+       HashMap<String,List<MenuItemEntity>> map = menuService.getMenu();
        MenuWrapper menuWrapper = new MenuWrapper();
        menuWrapper.setMenuMap(map);
 
@@ -98,19 +91,46 @@ public class MenuController {
         model.addAttribute("menuItem", new MenuItem());
         return "layout";
     }
+
     @GetMapping("menu/single-upload")
     public String singleupload(Model model) {
+
+        Merchant merchant = findLoggedInMerchant();
+        List<CategoryEntity> menuItemEntities = menuCategoryService.findCategoriesByMerchant(merchant);
         MenuItem menuItem = new MenuItem();
+
         model.addAttribute("con", "single-upload");
         model.addAttribute("menuItem", menuItem);
+        model.addAttribute("categoryList", menuItemEntities);
         return "layout";
     }
 
     @GetMapping("menu/edit-menu")
     public String editMenu(Model model) {
+
+        HashMap<String,List<MenuItemEntity>> map = menuService.getMenu();
+        MenuWrapper menuWrapper = new MenuWrapper();
+        menuWrapper.setMenuMap(map);
+
         model.addAttribute("con", "edit");
+        model.addAttribute("map", menuWrapper);
         return "layout";
     }
+
+    public Merchant findLoggedInMerchant() {
+
+        String username = null;
+        Merchant merchant= null;
+
+        username =securityService.getLoggedInUser();
+        if(username !=null) {
+            merchant= merchantReadRepository.findByEmail(username);
+        }
+        return merchant;
+    }
+
+
+
 
 
 

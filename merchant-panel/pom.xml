@@ -12,7 +12,7 @@
     <groupId>com.billt.core</groupId>
     <artifactId>merchant-panel</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>merchant-panel</name>
     <description>merchant panel for billt</description>
 

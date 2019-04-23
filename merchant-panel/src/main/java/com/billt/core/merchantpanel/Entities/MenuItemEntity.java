@@ -1,11 +1,9 @@
 package com.billt.core.merchantpanel.Entities;
 
+import com.billt.core.datasourcebase.entities.jpa.Merchant;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Data
@@ -15,9 +13,21 @@ public class MenuItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
+
     String name;
-    String category;
+
+    @ManyToOne
+    @JoinColumn
+    CategoryEntity categoryEntity;
+
+    @ManyToOne
+    @JoinColumn
+    Merchant merchant;
+
     Integer price;
+
+    String category;
+
     Date createdOn;
     Date updatedOn;
 }

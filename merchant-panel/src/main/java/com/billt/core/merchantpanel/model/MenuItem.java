@@ -11,6 +11,6 @@ public class MenuItem {
     String message;
     String category;
     Boolean isError;
-    Integer price;
+    String price;
     MultipartFile file;
 }

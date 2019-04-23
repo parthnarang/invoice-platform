@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -46,6 +47,10 @@ public class Merchant {
     private String email;
 
     private String confirmationToken;
+
+    @Transient
+    MultipartFile file;
+
 
     private String contactList;
     private String gstNo;
