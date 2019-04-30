@@ -7,4 +7,6 @@ import com.billt.core.invoicereceiver.utils.Response;
 public interface RegistrationService {
     public Response phoneNumberVerification(String phoneNum);
     public Response tokenVerification(RegistrationRequestHeader header, RegistrationRequestBody body);
+
+    Response updateCustomerToken(RegistrationRequestHeader header, RegistrationRequestBody body);
 }

@@ -7,4 +7,5 @@ import org.springframework.data.repository.query.Param;
 
 public interface CustomerTokenReadRepository extends JpaRepository<CustomerToken, Long> {
     CustomerToken findCustomerTokenByCid(@Param("cid") String cid);
+    CustomerToken findCustomerTokenByToken(@Param("token") String token);
 }

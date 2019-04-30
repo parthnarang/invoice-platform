@@ -40,7 +40,9 @@ public class IRegistrationServiceImpl implements RegistrationService {
     @Override
     public Response tokenVerification(RegistrationRequestHeader header, RegistrationRequestBody body){
         FirebaseToken decodedToken = null;
+        System.out.println("Registration Status tokenVerification header done");
         String idToken = header.getToken();
+        System.out.println("Registration Status header done" + idToken);
         Response response = new Response();
         try {
             //decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
@@ -87,6 +89,19 @@ public class IRegistrationServiceImpl implements RegistrationService {
             return response;
         }
 
+    }
+
+    @Override
+    public Response updateCustomerToken(RegistrationRequestHeader header, RegistrationRequestBody body) {
+        Customer customer = customerReadRepository.findCustomerByMobile(body.getPhoneNo());
+        CustomerToken customerToken = customerTokenReadRepository.findCustomerTokenByCid(customer.getCid());
+        customerToken.setToken(header.getToken());
+        iCustomerTokenService.registerCustomerToken(customerToken);
+        Response response = new Response();
+        response.setCode(106);
+        response.setStatus(true);
+        response.setMessage("Token Updated.");
+        return response;
     }
 
     private String createCustomerId(String firstName) {

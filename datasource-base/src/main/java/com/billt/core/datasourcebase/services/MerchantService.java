@@ -5,7 +5,6 @@ import com.billt.core.datasourcebase.repositories.jpa.read.MerchantReadRepositor
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -18,8 +17,8 @@ public class MerchantService {
     @Autowired
     MerchantReadRepository merchantReadRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    //@Autowired
+    //private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     private FileStorageServiceImpl fileStorageService;
@@ -56,7 +55,7 @@ public class MerchantService {
 
     public void addNewMerchant(Merchant merchant) {
 
-        merchant.setPassword(bCryptPasswordEncoder.encode(merchant.getPassword()));
+        //merchant.setPassword(bCryptPasswordEncoder.encode(merchant.getPassword()));
         merchant.setCreatedOn(new Date());
         merchant.setUpdatedOn(new Date());
         fileStorageService.storeFile(merchant.getFile());

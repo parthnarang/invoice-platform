@@ -92,6 +92,12 @@
                     <artifactId>datasource-base</artifactId>
                     <version>0.0.1-SNAPSHOT</version>
                 </dependency>
+        <dependency>
+            <groupId>com.billt.core</groupId>
+            <artifactId>invoice-receiver</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 

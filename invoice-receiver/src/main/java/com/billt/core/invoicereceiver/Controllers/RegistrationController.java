@@ -1,16 +1,19 @@
 package com.billt.core.invoicereceiver.Controllers;
 
-import com.billt.core.invoicereceiver.Model.*;
+import com.billt.core.invoicereceiver.Model.BillTGenericRequest;
+import com.billt.core.invoicereceiver.Model.RegistrationRequestBody;
+import com.billt.core.invoicereceiver.Model.RegistrationRequestHeader;
+import com.billt.core.invoicereceiver.Model.RegistrationRequestPayload;
 import com.billt.core.invoicereceiver.Service.RegistrationService;
 import com.billt.core.invoicereceiver.utils.Response;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.*;
 
 
 @Controller
@@ -31,10 +34,12 @@ public class RegistrationController {
 
         Long startTime = System.currentTimeMillis();
         try {
+            System.out.println("Registration Status try block");
             final RegistrationRequestHeader header = payload.getRequest().getHead();
-
+            System.out.println("Registration Status header done");
             final RegistrationRequestBody body = payload.getRequest().getBody();
             LOG.info("Registration body is : " + body.getFirstName());
+            System.out.println("Registration Status body done");
             return registrationService.tokenVerification(header, body);
         } catch (Exception e) {
             LOG.info("Registration Request Error : ", e.getMessage());
@@ -56,4 +61,83 @@ public class RegistrationController {
         System.out.println("CheckPhoneNumber Post Mapping println");
         return registrationService.phoneNumberVerification(body.getPhoneNo());
     }
+
+    @ResponseBody
+    @PostMapping(value = "updateToken", consumes = "application/json")
+    public Response updateToken(final @RequestBody BillTGenericRequest<RegistrationRequestPayload<RegistrationRequestHeader, RegistrationRequestBody>> payload){
+        final RegistrationRequestHeader header = payload.getRequest().getHead();
+        final RegistrationRequestBody body = payload.getRequest().getBody();
+        LOG.info("Update Token Post Mapping");
+        System.out.println("Update Token Post Mapping println");
+        return registrationService.updateCustomerToken(header,body);
+    }
+
+    @ResponseBody
+    @GetMapping(value = "getFeedback", produces = "application/json")
+    public String getFeedback(){
+        try {
+
+            //File file = ResourceUtils.getFile("classpath:resources/feedback");
+            File file = new File(
+                    getClass().getClassLoader().getResource("Feedback.txt").getFile()
+            );
+            InputStream inputStream = new FileInputStream(file);
+            StringWriter writer = new StringWriter();
+            IOUtils.copy(inputStream, writer, "UTF-8");
+            String resultString = writer.toString();
+            System.out.println("Result String is: "+ resultString);
+            return resultString;
+
+        } catch (IOException e) {
+            LOG.info("Feedback.txt Error is: " + e.getMessage());
+        }
+        return "Internal Server Error";
+    }
+
+    @ResponseBody
+    @GetMapping(value = "getPrivacyPolicy", produces = "application/json")
+    public String getPrivacyPolicy(){
+        try {
+            File file = new File(
+                    getClass().getClassLoader().getResource("PrivacyPolicy.txt").getFile()
+            );
+            InputStream inputStream = new FileInputStream(file);
+            StringWriter writer = new StringWriter();
+            IOUtils.copy(inputStream, writer, "UTF-8");
+            String resultString = writer.toString();
+            System.out.println("Result String is: "+ resultString);
+            return resultString;
+
+        } catch (IOException e) {
+            LOG.info("PrivacyPolicy.txt Error is: " + e.getMessage());
+        }
+        return "Internal Server Error";
+    }
+
+    @ResponseBody
+    @GetMapping(value = "getAbout", produces = "application/json")
+    public String getAbout(){
+        try {
+            File file = new File(
+                    getClass().getClassLoader().getResource("About.txt").getFile()
+            );
+            InputStream inputStream = new FileInputStream(file);
+            StringWriter writer = new StringWriter();
+            IOUtils.copy(inputStream, writer, "UTF-8");
+            String resultString = writer.toString();
+            System.out.println("Result String is: "+ resultString);
+            return resultString;
+
+        } catch (IOException e) {
+            LOG.info("About.txt Error is: " + e.getMessage());
+        }
+        return "Internal Server Error";
+    }
+
+
+
+
+
+
+
 }
