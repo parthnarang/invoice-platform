@@ -6,7 +6,7 @@ import com.billt.core.datasourcebase.services.FileStorageServiceImpl;
 import com.billt.core.merchantpanel.model.InvoiceBean;
 import com.billt.core.merchantpanel.service.Impl.InvoiceService;
 import com.billt.core.merchantpanel.service.Impl.SecurityServiceImpl;
-import com.billt.core.merchantpanel.service.MerchantService;
+import com.billt.core.merchantpanel.service.MerchantServiceNew;
 import com.billt.core.merchantpanel.validator.MerchantValidator;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -33,7 +33,7 @@ public class MerchantController {
     private static final Logger log = LoggerFactory.getLogger(MerchantController.class);
 
     @Autowired
-    private MerchantService merchantService;
+    private MerchantServiceNew merchantServiceNew;
 
     @Autowired
     private SecurityServiceImpl securityService;
@@ -80,7 +80,7 @@ public class MerchantController {
             return "signup";*/
 
         log.info("Receiving request to add new merchant {}",merchant);
-        merchantService.addNewMerchant(merchant);
+        merchantServiceNew.addNewMerchant(merchant);
         log.info("Creation for request is done");
         securityService.autoLogin(merchant.getEmail(), merchant.getPasswordConfirm());
         return "redirect:/panel/home";

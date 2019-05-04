@@ -133,8 +133,13 @@ public class InvoiceController {
                 List<InvoiceItem> invoiceItems = new ArrayList<InvoiceItem>(jsonObject.getJSONArray(ITEMS).length());
                 for (int i = 0; i < jsonObject.getJSONArray(ITEMS).length(); i++) {
                     JSONObject itemObject = jsonObject.getJSONArray(ITEMS).getJSONObject(i);
-                    invoiceItems.add(new InvoiceItem(itemObject.getString("DESCRIPTION")
-                    ,itemObject.getString("QTY"),itemObject.getString("RATE"),itemObject.getString("AMOUNT"),null));
+                    InvoiceItem invoiceItem = new InvoiceItem();
+                    invoiceItem.setAMOUNT(itemObject.getString("AMOUNT"));
+                    invoiceItem.setDESCRIPTION(itemObject.getString("DESCRIPTION"));
+                    invoiceItem.setQUANTITY(itemObject.getString("QTY"));
+                    invoiceItem.setRATE(itemObject.getString("RATE"));
+
+                    invoiceItems.add(invoiceItem);
                     invoiceRequestBean.setInvoiceItems(invoiceItems);
                 }
             }

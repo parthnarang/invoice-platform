@@ -25,11 +25,11 @@ import static com.billt.core.merchantpanel.Constants.MerchantPanelConstants.*;
 public class SmsInvoiceService {
 
     @Autowired
-    @Qualifier(value="urlService")
+    @Qualifier(value = "urlService")
     IUrlMapperService urlMapperService;
-
+/*
     @Autowired
-    InvoiceReadRepository invoiceReadRepository;
+    InvoiceReadRepository invoiceReadRepository;*/
 
     private static final Logger LOG = LoggerFactory.getLogger(SmsInvoiceService.class);
 
@@ -37,8 +37,8 @@ public class SmsInvoiceService {
     @Qualifier("merchantfreemarkerhelper")
     private Configuration freemarkerConfig;
 
-    public String constructSmsInvoice(String id){
-        try {
+    public String constructSmsInvoice(String id) {
+        /*try {
             String curl = BILLT_URL;
             InvoiceUrl invoiceUrl = urlMapperService.fetchTransaction(curl + id);
             String transactionId = invoiceUrl.getTransactionId();
@@ -62,13 +62,13 @@ public class SmsInvoiceService {
             smsInvoiceModel.put(TXN_TIN, invoice.getTin());
             smsInvoiceModel.put(TXN_TOTAL, invoice.getTotalAmt());
             smsInvoiceModel.put(TXN_ID, invoice.getTransID());
-            smsInvoiceModel.put(TXN_VAT, invoice.getVat());
+            smsInvoiceModel.put(TXN_VAT, invoice.getVat());*/
 
 
-            Template t = freemarkerConfig.getTemplate("SmsFreeMarkerTemplate.ftl");
+  /*          Template t = freemarkerConfig.getTemplate("SmsFreeMarkerTemplate.ftl");
             String smsInvoice = FreeMarkerTemplateUtils.processTemplateIntoString(t,smsInvoiceModel);
-            LOG.info("Sms Invoice Message " + smsInvoice);
-            return smsInvoice;
+            LOG.info("Sms Invoice Message " + smsInvoice);*/
+/*            return smsInvoice;
 
         } catch (IOException e) {
             LOG.info("Email Sender freemarker ioexception = " + e.toString());
@@ -76,6 +76,8 @@ public class SmsInvoiceService {
             LOG.info("Email Sender freemarker templateexception = " + e.toString());
         }
 
+
+    }*/
         return "";
     }
 }

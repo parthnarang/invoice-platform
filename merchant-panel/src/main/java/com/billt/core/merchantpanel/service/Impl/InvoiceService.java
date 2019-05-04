@@ -9,9 +9,14 @@ import com.billt.core.merchantpanel.repositories.read.MenuItemReadRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
 import java.util.List;
 
 @Service
@@ -68,6 +73,24 @@ public class InvoiceService {
     }
 
     public void sendNewInvoice(InvoiceBean invoiceBean){
+
         log.info(""+invoiceBean);
+        URI uri=null;
+
+        RestTemplate restTemplate = new RestTemplate();
+        final String baseUrl = "http://localhost:8080/invoicereceiver/processInvoice?MID=mer1001";
+        try {
+            uri = new URI(baseUrl);
+        } catch (Exception exception){
+
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-COM-PERSIST", "true");
+        headers.set("X-COM-LOCATION", "USA");
+
+        HttpEntity<InvoiceBean> request = new HttpEntity<>(invoiceBean, headers);
+
+        ResponseEntity<String> result = restTemplate.postForEntity(uri, request, String.class);
     }
 }

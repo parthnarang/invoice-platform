@@ -1,6 +1,7 @@
 com/billt/core/merchantpanel/service/MenuService.class
 com/billt/core/merchantpanel/controller/MerchantController.class
 com/billt/core/merchantpanel/Utils/MenuUtil.class
+com/billt/core/merchantpanel/service/MerchantServiceNew.class
 com/billt/core/merchantpanel/Helper/FreeMarkerHelper.class
 com/billt/core/merchantpanel/service/ISecurityService.class
 com/billt/core/merchantpanel/model/Category.class
@@ -11,7 +12,6 @@ com/billt/core/merchantpanel/service/Impl/UserServiceImpl.class
 com/billt/core/merchantpanel/model/InvoiceBean.class
 com/billt/core/merchantpanel/repositories/write/MenuItemWriteRepository.class
 com/billt/core/merchantpanel/service/Impl/MenuCategoryService.class
-com/billt/core/merchantpanel/service/MerchantService.class
 com/billt/core/merchantpanel/validator/MerchantValidator.class
 com/billt/core/merchantpanel/service/SmsInvoiceService.class
 com/billt/core/merchantpanel/repositories/read/MenuItemReadRepository.class
