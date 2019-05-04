@@ -3,9 +3,6 @@ package com.billt.core.merchantpanel.service;
 import com.billt.core.datasourcebase.entities.jpa.Merchant;
 import com.billt.core.datasourcebase.repositories.jpa.read.CustomerTokenReadRepository;
 import com.billt.core.datasourcebase.repositories.jpa.read.MerchantReadRepository;
-import com.billt.core.invoicereceiver.Model.RegistrationRequestBody;
-import com.billt.core.invoicereceiver.Model.RegistrationRequestHeader;
-import com.google.firebase.auth.FirebaseToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,24 +64,6 @@ public class MerchantService {
         return merchantReadRepository.findByConfirmationToken(confirmationToken);
     }
 
-    public Merchant findMerchantDetails(RegistrationRequestHeader header, RegistrationRequestBody body){
-        FirebaseToken decodedToken = null;
-        String idToken = header.getToken();
-        try {
-            //decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
-            //String uid = decodedToken.getUid();
-            String uid = "123";
-            if(uid!=null){
 
-            }
-            else{
-                return null;
-            }
-
-        } catch (/*FirebaseAuth*/Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
 }

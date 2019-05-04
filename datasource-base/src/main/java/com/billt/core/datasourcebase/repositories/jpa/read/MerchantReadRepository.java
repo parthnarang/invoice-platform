@@ -4,6 +4,8 @@ import com.billt.core.datasourcebase.entities.jpa.Merchant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 
 public interface MerchantReadRepository extends JpaRepository<Merchant, String> {
 
@@ -15,5 +17,6 @@ public interface MerchantReadRepository extends JpaRepository<Merchant, String> 
 
     Merchant findById(@Param("id") long id);
 
+    List<Merchant> findAll();
 }
 

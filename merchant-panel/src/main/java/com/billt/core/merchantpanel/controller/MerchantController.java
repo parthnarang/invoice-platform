@@ -3,10 +3,6 @@ package com.billt.core.merchantpanel.controller;
 import com.billt.core.datasourcebase.entities.jpa.Merchant;
 import com.billt.core.datasourcebase.repositories.jpa.read.MerchantReadRepository;
 import com.billt.core.datasourcebase.services.FileStorageServiceImpl;
-import com.billt.core.invoicereceiver.Model.BillTGenericRequest;
-import com.billt.core.invoicereceiver.Model.RegistrationRequestBody;
-import com.billt.core.invoicereceiver.Model.RegistrationRequestHeader;
-import com.billt.core.invoicereceiver.Model.RegistrationRequestPayload;
 import com.billt.core.merchantpanel.model.InvoiceBean;
 import com.billt.core.merchantpanel.service.Impl.InvoiceService;
 import com.billt.core.merchantpanel.service.Impl.SecurityServiceImpl;
@@ -133,17 +129,6 @@ public class MerchantController {
             return null;
 
         }
-    }
-
-    @ResponseBody
-    @PostMapping(value = "merchantDetails", consumes = "application/json")
-    public String getMerchantDetails(final @RequestBody BillTGenericRequest<RegistrationRequestPayload<RegistrationRequestHeader, RegistrationRequestBody>> payload) {
-        final RegistrationRequestHeader header = payload.getRequest().getHead();
-        final RegistrationRequestBody body = payload.getRequest().getBody();
-        log.info("GetMerchantDetails Post Mapping");
-        System.out.println("GetMerchantDetails Post Mapping println");
-        return merchantService.findMerchantDetails(header,body);
-        return "";
     }
 
 

@@ -2,8 +2,9 @@ package com.billt.core.invoicereceiver.Controllers;
 
 import com.billt.core.datasourcebase.collection.Invoice;
 import com.billt.core.datasourcebase.entities.jpa.Customer;
+import com.billt.core.datasourcebase.entities.jpa.Merchant;
 import com.billt.core.datasourcebase.repositories.mongo.read.InvoiceReadRepository;
-import com.billt.core.invoicereceiver.Model.ResponseMessage;
+import com.billt.core.invoicereceiver.Model.*;
 import com.billt.core.invoicereceiver.Service.ICustomerService;
 import com.billt.core.datasourcebase.services.MerchantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,6 +99,15 @@ public class CustomerController {
             return new ResponseEntity<String>("",HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<String>(logoUrl,HttpStatus.OK);
+    }
+
+    @ResponseBody
+    @PostMapping(value = "merchantDetails", consumes = "application/json")
+    public List<Merchant> getMerchantDetails(final @RequestBody BillTGenericRequest<RegistrationRequestPayload<RegistrationRequestHeader, RegistrationRequestBody>> payload) {
+        final RegistrationRequestHeader header = payload.getRequest().getHead();
+        final RegistrationRequestBody body = payload.getRequest().getBody();
+        System.out.println("GetMerchantDetails Post Mapping println");
+        return iCustomerService.findMerchantDetails(header,body);
     }
 
 

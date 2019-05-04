@@ -1,0 +1,75 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+
+<head>
+    <title>Bulk upload</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+          integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+          crossorigin="anonymous"/>
+    <style>
+    
+
+    </style>
+</head>
+
+
+<body>
+
+<section layout:fragment="content">
+
+    <div class="container" th:object="${menuItem}">
+        <div th:if="${menuItem.isError}">
+            <div class="alert alert-danger" th:text="${menuItem.message}" ></div>
+        </div>
+        <div th:if="${menuItem.isError}==false">
+            <div class="alert alert-success" th:text="${menuItem.message}"></div>
+        </div>
+
+    </div>
+
+    <h1> Bulk Inventory upload</h1>
+
+
+
+    <h3>Step 1 : Download Inventory Item Template:</h3>
+
+        <span>Fill out Inventory Item template and upload in the form below:</span>
+            <a style="display:inline;" href="/SampleFiles/sample.csv">
+                <button class="btn btn-success" >Download Sample Template</button>
+            </a></legend>
+
+
+<!--    <div class="container" th:object="${newIssue}">
+        <div th:if="${newIssue.isError}">
+            <div class="alert alert-danger" th:text="${newIssue.message}" ></div>
+        </div>
+        <div th:if="${newIssue.isError}==false">
+            <div class="alert alert-success" th:text="${newIssue.message}"></div>
+        </div>
+
+    </div>-->
+
+
+    <br><br>
+    <h3>Step 2 : Upload Inventory Item Template:</h3>
+    <form  th:action="@{/panel/menu/addMenuIteminBulk}" method="post" th:object="${newItem}"  enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-6">
+                <fieldset>
+                    <input type="file" name="file"  class="form-control csvFile" accept=".csv"  />
+                </fieldset>
+                <br>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button></div>
+
+    </form>
+
+    <br>
+    <br>
+
+</section>
+</body>
+</html>
+

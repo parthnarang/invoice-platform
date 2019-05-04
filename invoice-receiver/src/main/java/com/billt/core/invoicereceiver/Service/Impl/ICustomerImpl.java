@@ -1,11 +1,18 @@
 package com.billt.core.invoicereceiver.Service.Impl;
 
 import com.billt.core.datasourcebase.entities.jpa.Customer;
+import com.billt.core.datasourcebase.entities.jpa.Merchant;
 import com.billt.core.datasourcebase.repositories.jpa.read.CustomerReadRepository;
+import com.billt.core.datasourcebase.repositories.jpa.read.MerchantReadRepository;
 import com.billt.core.datasourcebase.repositories.jpa.write.CustomerWriteRepository;
+import com.billt.core.invoicereceiver.Model.RegistrationRequestBody;
+import com.billt.core.invoicereceiver.Model.RegistrationRequestHeader;
 import com.billt.core.invoicereceiver.Service.ICustomerService;
+import com.google.firebase.auth.FirebaseToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service("customerService")
 public class ICustomerImpl implements ICustomerService {
@@ -15,6 +22,9 @@ public class ICustomerImpl implements ICustomerService {
 
     @Autowired
     CustomerWriteRepository customerWriteRepository;
+
+    @Autowired
+    MerchantReadRepository merchantReadRepository;
 
     public void saveCustomer(Customer customer){
 
@@ -46,6 +56,27 @@ public class ICustomerImpl implements ICustomerService {
 
 
         return customer;
+    }
+
+    public List<Merchant> findMerchantDetails(RegistrationRequestHeader header, RegistrationRequestBody body){
+        FirebaseToken decodedToken = null;
+        String idToken = header.getToken();
+        try {
+            //decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
+            //String uid = decodedToken.getUid();
+            String uid = "123";
+            if(uid!=null){
+                List<Merchant> allMerchants = merchantReadRepository.findAll();
+                return allMerchants;
+            }
+            else{
+                return null;
+            }
+
+        } catch (/*FirebaseAuth*/Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 
