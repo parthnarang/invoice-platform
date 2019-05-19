@@ -49,6 +49,9 @@ INSERT INTO `merchant` VALUES (4,'mid1004','Big Bazaar','DLF Mall of india','123
 INSERT INTO `merchant` VALUES (5,'mid1005','Pizza Hut','DLF Mall of india','1234','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToizJ2VPvQjlICjowUFyEgDkA_Wi9_pe7agf3uIlvi-U5zn6dQ','h&m@gmailc.com','9811677643, 9811666444','1234','1234','2019-01-02 13:01:10','2019-01-02 13:02:10');
 INSERT INTO `merchant` VALUES (6,'mid1006','NIKE','DLF Mall of india','1234','https://images-na.ssl-images-amazon.com/images/I/61Q-S6t2yNL._SX425_.jpg','h&m@gmailc.com','9811677643, 9811666444','1234','1234','2019-01-02 13:01:10','2019-01-02 13:02:10');
 
+INSERT INTO `merchant` VALUES (5,null,'1234','9811677643, 9811666444','2019-01-02 13:01:10','h&m@gmailc.com','1234','DLF Mall of india','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcToizJ2VPvQjlICjowUFyEgDkA_Wi9_pe7agf3uIlvi-U5zn6dQ','Pizza Hut','mid1005','1234','1234','1234','1234','2019-01-02 13:02:10',null);
+INSERT INTO `merchant` VALUES (6,null,'1234','9811677643, 9811666444','2019-01-02 13:01:10','h&m@gmailc.com','1234','DLF Mall of india','https://images-na.ssl-images-amazon.com/images/I/61Q-S6t2yNL._SX425_.jpg','NIKE','mid1006','1234','1234','1234','1234','2019-01-02 13:02:10',null);
+
 
 
 

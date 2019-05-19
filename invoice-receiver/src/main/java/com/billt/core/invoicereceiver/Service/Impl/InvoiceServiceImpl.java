@@ -1,5 +1,6 @@
 package com.billt.core.invoicereceiver.Service.Impl;
 
+import com.billt.core.datasourcebase.Service.IUrlMapperService;
 import com.billt.core.datasourcebase.services.MerchantService;
 import com.billt.core.datasourcebase.collection.Invoice;
 import com.billt.core.datasourcebase.entities.jpa.Customer;
@@ -11,6 +12,8 @@ import com.billt.core.datasourcebase.model.invoiceReceiver.TransactionFlowReques
 import com.billt.core.invoicereceiver.Service.*;
 import com.billt.core.invoicereceiver.enums.ResponseCode;
 import com.billt.core.invoicereceiver.enums.invoiceReceiver.ValidationResults;
+import com.billt.core.notificationservice.Helpers.EmailHelper;
+import com.billt.core.notificationservice.Helpers.SmsHelper;
 import com.billt.core.notificationservice.Services.EmailSender;
 import com.billt.core.notificationservice.Services.NotificationPush;
 import org.slf4j.Logger;
@@ -48,7 +51,16 @@ public class InvoiceServiceImpl implements IInvoiceService {
     EmailSender emailSender;
 
     @Autowired
+    EmailHelper emailHelper;
+
+    @Autowired
     CustomerReadRepository customerReadRepository;
+
+    @Autowired
+    SmsHelper smsHelper;
+
+    @Autowired
+    IUrlMapperService urlMapperService;
 
     private static final Logger LOG = LoggerFactory.getLogger(InvoiceServiceImpl.class);
 
@@ -88,11 +100,19 @@ public class InvoiceServiceImpl implements IInvoiceService {
                uemail = customer.getEmail();
            }
            if(uemail.compareTo("") != 0){
-               //emailSender.sendSimpleMessage("norirahul@gmail.com","Test mail","Hello this is a test mail for BillT");
-               emailSender.sendSimpleMessage(uemail,"Test mail","Hello this is a test mail for BillT");
+               String emailMessage = emailHelper.constructEmail(transactionFlowRequestBean);
+               //emailSender.sendSimpleMessage(uemail,"Test mail","Hello this is a test mail for BillT");
+               if(emailMessage.compareTo("")!=0)
+                   emailSender.sendSimpleMessage(uemail,"Test mail",emailMessage);
            }
 
            saveNewInvoice(transactionFlowRequestBean);
+
+           String transactionUrl = urlMapperService.mapUrl(transactionFlowRequestBean.getTransID());
+           String sms = smsHelper.sendSms(transactionFlowRequestBean,transactionUrl);
+           LOG.info("SMS helper return value: {}",sms);
+
+
        }
        catch (RequestDataMappingException e){
         return e.getResponseCode();
