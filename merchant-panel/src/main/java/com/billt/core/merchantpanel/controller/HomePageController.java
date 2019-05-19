@@ -1,7 +1,7 @@
 package com.billt.core.merchantpanel.controller;
 
 import com.billt.core.datasourcebase.entities.jpa.Merchant;
-import com.billt.core.merchantpanel.service.MerchantService;
+import com.billt.core.merchantpanel.service.MerchantServiceNew;
 import com.billt.core.merchantpanel.service.Impl.SecurityServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,12 +20,12 @@ public class HomePageController {
     private static final Logger log = LoggerFactory.getLogger(HomePageController.class);
 
     @Autowired
-    private MerchantService merchantService;
+    private MerchantServiceNew merchantServiceNew;
 
     @Autowired
     private SecurityServiceImpl securityService;
 
-    @GetMapping("home")
+/*    @GetMapping("home")
     public String home(Model model) {
         model.addAttribute("con", "dashboard");
         return "layout";
@@ -41,23 +41,25 @@ public class HomePageController {
         Merchant merchant = new Merchant();
         model.addAttribute("merchant",merchant);
         return "signup";
-    }
-
+    }*/
+/*
     @PostMapping("registration")
     public String addNewMerchant(@ModelAttribute Merchant merchant) {
         log.info("Receiving request to add new merchant");
-        merchantService.addNewMerchant(merchant);
+        merchantServiceNew.addNewMerchant(merchant);
         log.info("Creation for request is done");
         securityService.autoLogin(merchant.getEmail(), merchant.getPasswordConfirm());
         return "success";
-    }
+    }*/
 
 
+/*
     @GetMapping("invoice")
     public String invoice(Model model) {
         model.addAttribute("con", "invoice");
         return "layout";
     }
+*/
 
 
 }
