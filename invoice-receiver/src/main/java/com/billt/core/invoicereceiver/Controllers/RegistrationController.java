@@ -1,6 +1,6 @@
 package com.billt.core.invoicereceiver.Controllers;
 
-import com.billt.core.invoicereceiver.Model.BillTGenericRequest;
+import com.billt.core.invoicereceiver.Model.BilltGenericRequest;
 import com.billt.core.invoicereceiver.Model.RegistrationRequestBody;
 import com.billt.core.invoicereceiver.Model.RegistrationRequestHeader;
 import com.billt.core.invoicereceiver.Model.RegistrationRequestPayload;
@@ -28,7 +28,7 @@ public class RegistrationController {
     @PostMapping(value = "signupUser", consumes = "application/json")
     public Response registrationStatus(
             //@ApiParam(value = "Json payload containing RegistrationRequestHeader and RegistrationRequestBody", required = true)
-            final @RequestBody BillTGenericRequest<RegistrationRequestPayload<RegistrationRequestHeader, RegistrationRequestBody>> payload) {
+            final @RequestBody BilltGenericRequest<RegistrationRequestPayload<RegistrationRequestHeader, RegistrationRequestBody>> payload) {
         LOG.info("Registration Post Mapping");
         System.out.println("Registration Post Mapping println");
 
@@ -54,7 +54,7 @@ public class RegistrationController {
 
     @ResponseBody
     @PostMapping(value = "checkPhoneNum", consumes = "application/json")
-    public Response validatePhoneNumber(final @RequestBody BillTGenericRequest<RegistrationRequestPayload<RegistrationRequestHeader, RegistrationRequestBody>> payload){
+    public Response validatePhoneNumber(final @RequestBody BilltGenericRequest<RegistrationRequestPayload<RegistrationRequestHeader, RegistrationRequestBody>> payload){
         final RegistrationRequestHeader header = payload.getRequest().getHead();
         final RegistrationRequestBody body = payload.getRequest().getBody();
         LOG.info("CheckPhoneNumber Post Mapping");
@@ -64,7 +64,7 @@ public class RegistrationController {
 
     @ResponseBody
     @PostMapping(value = "updateToken", consumes = "application/json")
-    public Response updateToken(final @RequestBody BillTGenericRequest<RegistrationRequestPayload<RegistrationRequestHeader, RegistrationRequestBody>> payload){
+    public Response updateToken(final @RequestBody BilltGenericRequest<RegistrationRequestPayload<RegistrationRequestHeader, RegistrationRequestBody>> payload){
         final RegistrationRequestHeader header = payload.getRequest().getHead();
         final RegistrationRequestBody body = payload.getRequest().getBody();
         LOG.info("Update Token Post Mapping");

@@ -22,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 
 @Service("invoiceService")
 public class InvoiceServiceImpl implements IInvoiceService {
@@ -74,8 +76,8 @@ public class InvoiceServiceImpl implements IInvoiceService {
 
         return ValidationResults.VALIDATION_SUCCESS;
     }
-
-    public ResponseCode processInvoiceRequest(InvoiceRequestBean requestData){
+@Override
+    public ResponseCode processInvoiceRequest(InvoiceRequestBean requestData) throws IOException {
 
         LOG.info("Invoice Request Received for order id : {}", requestData.getOrderId());
 
@@ -116,9 +118,6 @@ public class InvoiceServiceImpl implements IInvoiceService {
        }
        catch (RequestDataMappingException e){
         return e.getResponseCode();
-       }
-       catch (Exception e){
-   System.out.println("Dd");
        }
        return ResponseCode.TRANSACTION_SUCCESS;
     }

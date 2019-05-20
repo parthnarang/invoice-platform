@@ -5,22 +5,30 @@ public class InvoiceReceiverConstants {
     //request parameters
     public static final String MID = "mid";
     public static final String VID = "vid";
-    public static final String ORDER_ID = "order_id";
-    public static final String CUST_ID = "cust_id";
+    public static final String ORDER_ID = "orderId";
+    public static final String CUST_ID = "billtId";
     public static final String TXN_ID = "txn_id";
     public static final String CHECKSUMHASH = "checksumhash";
-    public static final String MOBILE_NO = "mobile";
+    public static final String MOBILE_NO = "mobileNo";
     public static final String EMAIL = "email";
-    public static final String MERCHANT_NAME = "merchant_name";
+    public static final String MERCHANT_NAME = "merchantName";
     public static final String ADDRESS = "address";
-    public static final String PHONE_NO = "phone_no";
+    public static final String PHONE_NO_LIST = "phoneNoList";
     public static final String GST = "gst";
+    public static final String TIN_NO = "tinNo";
     public static final String TIME = "time";
     public static final String DATE = "date";
-    public static final String ITEMS = "ITEMS";
-    public static final String TOTAL_AMT = "total_amt";
+    public static final String ITEM_LIST = "itemListWrapper";
+    public static final String TOTAL_AMT = "totalAmt";
     public static final String VAT = "vat";
     public static final String NET = "net";
+    public static final String CGST = "cgst";
+    public static final String SGST = "sgst";
+    public static final String DISCOUNT = "discount";
+    public static final String CUSTOMER_MOBILE_NO = "customerMobileNO";
+    public static final String CUSTOMER_EMAIL_TO = "customerEmail";
+    public static final String TABLE_NO = "tableNO";
+    public static final String HOST = "host";
 
 
     //validation parameters

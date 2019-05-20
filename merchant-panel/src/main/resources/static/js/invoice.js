@@ -1,22 +1,29 @@
 
 $(document).ready(function () {
     var counter = 0;
+    var count = 0;
 
-    $("#AddProduct").on("click", function () {
-        var newRow = $("<tr>");
-        var cols = "";
+        $("#AddProduct").on("click", function () {
+            var newRow = $("<tr>");
+            var cols = "";
 
-        cols += '<td><textarea class="editable input-block-level" type="text" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 40px;"/></td>';
-        cols += '<td><input data-key="qty" class="editable input-mini" value="1" size="3"/></td>';
-        cols += '<td><input data-key="unit_price" class="editable input-mini" value="5" size="5" ><span style="display:inline"/><span style="display:inline"> Rs</span></td>';
-        cols += '<td><input data-key="unit_price" class="editable input-mini" value="5" size="5" ><span style="display:inline"/><span style="display:inline"> Rs</span> </td>';
-        cols += '<td><btn href="#" class="btn btn-danger btn-sm remove-item"><i class="fa fa-trash icon-white"></i></btn></td>';
+            cols += '<td><textarea class="editable input-block-level" type="text" name="itemListWrapper.invoiceItems['+count +'].DESCRIPTION" ' +
+                'id="itemListWrapper.invoiceItems'+count+'.DESCRIPTION" /></td>';
+            cols += '<td><input data-key="qty" class="editable input-mini" size="3" name="itemListWrapper.invoiceItems['+count + '].QUANTITY" ' +
+                                'id="itemListWrapper.invoiceItems'+count+'.QUANTITY"/></td>';
+            cols += '<td><input data-key="unit_price" class="editable input-mini" size="5" name="itemListWrapper.invoiceItems['+count + '].RATE" ' +
+                'id="itemListWrapper.invoiceItems'+count+'.RATE"><span style="display:inline"> Rs</span></td>';
+            cols += '<td><input data-key="unit_price" class="editable input-mini" size="5" name="itemListWrapper.invoiceItems['+count + '].AMOUNT" ' +
+                'id="itemListWrapper.invoiceItems'+count+'.AMOUNT"><span style="display:inline"> Rs</span> </td>';
+            cols += '<td><btn href="#" class="btn btn-danger btn-sm remove-item"><i class="fa fa-trash icon-white"></i></btn></td>';
 
-        //cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
-        newRow.append(cols);
-        $('#ItemsTable').append(newRow);
-        // counter++;
-    });
+            //cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
+            newRow.append(cols);
+            $('#ItemsTable').append(newRow);
+            // counter++;
+            count++;
+        });
+
 
 
 
@@ -24,11 +31,11 @@ $(document).ready(function () {
         $(this).closest("tr").remove();
     });
 
-    $("#myInput").on("keyup", function() {
-        var len= $(this).val().length;
-        if(len == 0){
-            $('#myList').css({'display':'none'});
-        }else {
+    $("#myInput").on("keyup", function () {
+        var len = $(this).val().length;
+        if (len == 0) {
+            $('#myList').css({'display': 'none'});
+        } else {
             $('#myList').css({'display': 'block'});
             var value = $(this).val();
             $("#myList li").filter(function () {
@@ -38,25 +45,29 @@ $(document).ready(function () {
         }
     });
 
-    $("ul#myList li").click(function() {
-        //  alert("Clicked list." + $(this).text());
+    $("ul#myList li").click(function () {
+
+ var item_name = $(this).children(".menu_name").text();
+ var item_price = $(this).children(".menu_price").text();
 
         var newRow = $("<tr>");
         var cols = "";
 
-        cols += '<td><textarea class="editable input-block-level" type="text" value="5ff" style="overflow: hidden;  overflow-wrap: break-word; resize: none; height: 40px;" >'+$(this).text()+'</textarea></td>';
-        cols += '<td><input data-key="qty" class="editable input-mini" value="1" size="3"'+ 'th:field="*{invoiceItems[0].QUANTITY}"'+'/></td>';
-        cols += '<td><input data-key="unit_price" class="editable input-mini" value="5" size="5" th:field="*{invoiceItems[0].RATE}" ><span style="display:inline"/><span style="display:inline"> Rs</span></td>';
-        cols += '<td><input data-key="unit_price" class="editable input-mini" value="5" size="5" th:field="*{invoiceItems[0].AMOUNT}" ><span style="display:inline"/><span style="display:inline"> Rs</span> </td>';
+        cols += '<td><textarea class="editable input-block-level" type="text" name="itemListWrapper.invoiceItems['+count +'].DESCRIPTION" ' +
+            'id="itemListWrapper.invoiceItems'+count+'.DESCRIPTION">'+item_name+'</textarea></td>';
+        cols += '<td><input data-key="qty" class="editable input-mini" size="3" value="1" name="itemListWrapper.invoiceItems['+count + '].QUANTITY" ' +
+            'id="itemListWrapper.invoiceItems'+count+'.QUANTITY"></td>';
+        cols += '<td><input data-key="unit_price" class="editable input-mini" size="5" value ="'+item_price+'" name="itemListWrapper.invoiceItems['+count + '].RATE" ' +
+            'id="itemListWrapper.invoiceItems'+count+'.RATE"><span style="display:inline"> Rs</span></td>';
+        cols += '<td><input data-key="unit_price" class="editable input-mini" size="5" value ="'+item_price+'"  name="itemListWrapper.invoiceItems['+count + '].AMOUNT" ' +
+            'id="itemListWrapper.invoiceItems'+count+'.AMOUNT"><span style="display:inline"> Rs</span> </td>';
         cols += '<td><btn href="#" class="btn btn-danger btn-sm remove-item"><i class="fa fa-trash icon-white"></i></btn></td>';
 
-        //cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
-        newRow.append(cols);
-        $('#ItemsTable').append(newRow);
+                //cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
+                newRow.append(cols);
+                $('#ItemsTable').append(newRow);
+
     });
-
-
-
 
 });
 

@@ -1,10 +1,13 @@
 package com.billt.core.merchantpanel.service.Impl;
 
 import com.billt.core.datasourcebase.entities.jpa.Merchant;
+import com.billt.core.datasourcebase.model.invoiceReceiver.InvoiceItem;
 import com.billt.core.datasourcebase.repositories.jpa.read.MerchantReadRepository;
+import com.billt.core.datasourcebase.util.RandomString;
 import com.billt.core.merchantpanel.Entities.MenuItemEntity;
 import com.billt.core.merchantpanel.controller.MerchantController;
 import com.billt.core.merchantpanel.model.InvoiceBean;
+import com.billt.core.datasourcebase.model.ItemListWrapper;
 import com.billt.core.merchantpanel.repositories.read.MenuItemReadRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -60,8 +64,14 @@ public class InvoiceService {
         List<MenuItemEntity> menuList = findMerchantMenuItems();
 
         Merchant merchant = merchantReadRepository.findById(findLoggedInMerchant().getId());
-
+        String orderId = RandomString.getOrderId();
         InvoiceBean invoiceBean = new InvoiceBean();
+        invoiceBean.setOrderId(orderId);
+        List<InvoiceItem> invoiceItems = new ArrayList<>();
+        ItemListWrapper itemListWrapper = new ItemListWrapper();
+        itemListWrapper.setInvoiceItems(invoiceItems);
+        invoiceBean.setItemListWrapper(itemListWrapper);
+
         invoiceBean.setAddress(merchant.getMerchantAddress());
         invoiceBean.setMerchantName(merchant.getMerchantName());
         invoiceBean.setPhoneNoList(merchant.getContactList());
@@ -74,11 +84,16 @@ public class InvoiceService {
 
     public void sendNewInvoice(InvoiceBean invoiceBean){
 
+        Merchant merchant = merchantReadRepository.findById(findLoggedInMerchant().getId());
+
+        invoiceBean.setMid(merchant.getMid());
+        invoiceBean.setNet(10.0);
+
         log.info(""+invoiceBean);
         URI uri=null;
 
         RestTemplate restTemplate = new RestTemplate();
-        final String baseUrl = "http://localhost:8080/invoicereceiver/processInvoice?MID=mer1001";
+        final String baseUrl = "http://localhost:8080/invoicereceiver/processInvoice?MID="+merchant.getMid();
         try {
             uri = new URI(baseUrl);
         } catch (Exception exception){
@@ -87,7 +102,6 @@ public class InvoiceService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-COM-PERSIST", "true");
-        headers.set("X-COM-LOCATION", "USA");
 
         HttpEntity<InvoiceBean> request = new HttpEntity<>(invoiceBean, headers);
 

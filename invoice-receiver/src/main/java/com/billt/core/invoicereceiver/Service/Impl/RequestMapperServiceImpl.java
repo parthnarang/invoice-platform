@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.UUID;
 
 
 @Service("requestmappperservice")
@@ -49,27 +50,27 @@ public class RequestMapperServiceImpl implements IRequestMapperService {
         transactionFlowRequestBean.setOrderId(invoiceRequestBean.getOrderId());
         transactionFlowRequestBean.setMerchantName(invoiceRequestBean.getMerchantName());
         transactionFlowRequestBean.setAddress(invoiceRequestBean.getAddress());
-        transactionFlowRequestBean.setPhoneNo(invoiceRequestBean.getPhoneNo());
+        transactionFlowRequestBean.setPhoneNo(invoiceRequestBean.getPhoneNoList());
         transactionFlowRequestBean.setGst(invoiceRequestBean.getGst());
         transactionFlowRequestBean.setTime(invoiceRequestBean.getTime());
         transactionFlowRequestBean.setDate(invoiceRequestBean.getDate());
-        transactionFlowRequestBean.setTotalAmt(invoiceRequestBean.getTotalAmt());
-        transactionFlowRequestBean.setVat(invoiceRequestBean.getVat());
-        transactionFlowRequestBean.setNet(invoiceRequestBean.getNet());
-        transactionFlowRequestBean.setInvoiceItems(invoiceRequestBean.getInvoiceItems());
+        transactionFlowRequestBean.setTotalAmt(invoiceRequestBean.getTotalAmt().toString());
+        transactionFlowRequestBean.setVat(invoiceRequestBean.getVat().toString());
+        transactionFlowRequestBean.setNet(invoiceRequestBean.getNet().toString());
+        transactionFlowRequestBean.setInvoiceItems(invoiceRequestBean.getItemListWrapper().getInvoiceItems());
 
         if(customer!=null){
             transactionFlowRequestBean.setCid(customer.getCid());
         }
 
-        if(invoiceRequestBean.getEmail() != null){
-            transactionFlowRequestBean.setEmail(invoiceRequestBean.getEmail());
+        if(invoiceRequestBean.getCustomerEmail() != null){
+            transactionFlowRequestBean.setEmail(invoiceRequestBean.getCustomerEmail());
         }
-        if(invoiceRequestBean.getMobileNo()!= null){
-            transactionFlowRequestBean.setMobileNo(invoiceRequestBean.getMobileNo());
+        if(invoiceRequestBean.getCustomerMobileNO()!= null){
+            transactionFlowRequestBean.setMobileNo(invoiceRequestBean.getCustomerMobileNO());
         }
 
-        transactionFlowRequestBean.setTransID("89765ddd4422123");
+        transactionFlowRequestBean.setTransID(UUID.randomUUID().toString());
         transactionFlowRequestBean.setBilltDate(new Date());
 
         return transactionFlowRequestBean;
