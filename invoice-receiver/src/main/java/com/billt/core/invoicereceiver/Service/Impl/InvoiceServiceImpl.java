@@ -11,7 +11,7 @@ import com.billt.core.datasourcebase.model.invoiceReceiver.TransactionFlowReques
 import com.billt.core.invoicereceiver.Service.*;
 import com.billt.core.invoicereceiver.enums.ResponseCode;
 import com.billt.core.invoicereceiver.enums.invoiceReceiver.ValidationResults;
-import com.billt.core.invoicereceiver.Service.EmailSender;
+import com.billt.core.notificationservice.Services.EmailSender;
 import com.billt.core.notificationservice.Services.NotificationPush;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
