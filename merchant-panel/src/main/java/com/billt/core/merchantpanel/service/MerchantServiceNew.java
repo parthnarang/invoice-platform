@@ -3,6 +3,7 @@ package com.billt.core.merchantpanel.service;
 import com.billt.core.datasourcebase.entities.jpa.Merchant;
 import com.billt.core.datasourcebase.repositories.jpa.read.CustomerTokenReadRepository;
 import com.billt.core.datasourcebase.repositories.jpa.read.MerchantReadRepository;
+import com.billt.core.datasourcebase.util.RandomString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,8 @@ public class MerchantServiceNew {
         merchant.setPassword(bCryptPasswordEncoder.encode(merchant.getPassword()));
         merchant.setCreatedOn(new Date());
         merchant.setUpdatedOn(new Date());
+        String mid = RandomString.getAlphaNumericString(10);
+        merchant.setMid(mid);
             merchantReadRepository.save(merchant);
     }
 

@@ -103,7 +103,7 @@ public class CustomerController {
 
     @ResponseBody
     @PostMapping(value = "merchantDetails", consumes = "application/json")
-    public List<Merchant> getMerchantDetails(final @RequestBody BillTGenericRequest<RegistrationRequestPayload<RegistrationRequestHeader, RegistrationRequestBody>> payload) {
+    public List<Merchant> getMerchantDetails(final @RequestBody BilltGenericRequest<RegistrationRequestPayload<RegistrationRequestHeader, RegistrationRequestBody>> payload) {
         final RegistrationRequestHeader header = payload.getRequest().getHead();
         final RegistrationRequestBody body = payload.getRequest().getBody();
         System.out.println("GetMerchantDetails Post Mapping println");

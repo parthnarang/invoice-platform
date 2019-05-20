@@ -1,6 +1,7 @@
 package com.billt.core.invoicereceiver.Controllers;
 
 
+import com.billt.core.datasourcebase.model.ItemListWrapper;
 import com.billt.core.datasourcebase.model.invoiceReceiver.InvoiceItem;
 import com.billt.core.invoicereceiver.Model.InvoiceRequestBean;
 import com.billt.core.invoicereceiver.Service.IInvoiceService;
@@ -42,12 +43,13 @@ public class InvoiceController {
     @PostMapping(value = "processInvoice",consumes = "application/json")
     public void processInvoice(final HttpServletRequest request, final HttpServletResponse response,
                                final Model model, @RequestParam("MID") String merchantId) throws IOException, ServletException {
-        System.out.println("sddd");
+
         final long startTime = System.currentTimeMillis();
         try {
 
             LOG.debug("Invoice Request Received for merchantId : {}", merchantId);
             JSONObject jsonRequest = mapToJson(request);
+            LOG.info("request received = {}",jsonRequest);
             InvoiceRequestBean invoiceRequestBean = mapToInvoiceRequestBean(jsonRequest);
             processRequest(request, response, invoiceRequestBean, model);
 
@@ -68,7 +70,7 @@ public class InvoiceController {
                                 InvoiceRequestBean invoiceRequestData, final Model model) throws IOException, ServletException {
 
         ResponseCode customResponse = processInvoiceRequest(invoiceRequestData);
-        Assert.notNull(customResponse, "Service page response received was null");
+/*        Assert.notNull(customResponse, "Service page response received was null");*/
 
 
         response.getWriter().print(new JSONObject(customResponse));
@@ -76,7 +78,7 @@ public class InvoiceController {
 
     }
 
-    public ResponseCode processInvoiceRequest(final InvoiceRequestBean invoiceRequestData) {
+    public ResponseCode processInvoiceRequest(final InvoiceRequestBean invoiceRequestData) throws IOException {
         LOG.info("InvoiceRequestbean received : {}", invoiceRequestData);
         ResponseCode responseCode=null;
         ValidationResults validationResults;
@@ -129,26 +131,33 @@ public class InvoiceController {
                 invoiceRequestBean.setMobileNo(jsonObject.getString(MOBILE_NO));
             if(jsonObject.has(EMAIL))
                 invoiceRequestBean.setEmail(jsonObject.getString(EMAIL));
-            if(jsonObject.has(ITEMS)) {
-                List<InvoiceItem> invoiceItems = new ArrayList<InvoiceItem>(jsonObject.getJSONArray(ITEMS).length());
-                for (int i = 0; i < jsonObject.getJSONArray(ITEMS).length(); i++) {
-                    JSONObject itemObject = jsonObject.getJSONArray(ITEMS).getJSONObject(i);
-                    InvoiceItem invoiceItem = new InvoiceItem();
-                    invoiceItem.setAMOUNT(itemObject.getString("AMOUNT"));
-                    invoiceItem.setDESCRIPTION(itemObject.getString("DESCRIPTION"));
-                    invoiceItem.setQUANTITY(itemObject.getString("QTY"));
-                    invoiceItem.setRATE(itemObject.getString("RATE"));
+            if(jsonObject.has(ITEM_LIST)) {
+                JSONObject itemListWrapper = jsonObject.getJSONObject(ITEM_LIST);
 
-                    invoiceItems.add(invoiceItem);
-                    invoiceRequestBean.setInvoiceItems(invoiceItems);
+                ItemListWrapper itemListWrapperNew= new ItemListWrapper();
+                List<InvoiceItem> invoiceItemList = new ArrayList<>();
+                for (int i = 0; i < itemListWrapper.getJSONArray("invoiceItems").length(); i++) {
+                    JSONObject itemObject = itemListWrapper.getJSONArray("invoiceItems").getJSONObject(i);
+                    InvoiceItem invoiceItem = new InvoiceItem();
+                    invoiceItem.setAMOUNT(itemObject.getString("amount"));
+                    invoiceItem.setDESCRIPTION(itemObject.getString("description"));
+                    invoiceItem.setQUANTITY(itemObject.getString("quantity"));
+                    invoiceItem.setRATE(itemObject.getString("rate"));
+
+                    invoiceItemList.add(invoiceItem);
+
                 }
+                itemListWrapperNew.setInvoiceItems(invoiceItemList);
+                invoiceRequestBean.setItemListWrapper(itemListWrapperNew);
             }
         if(jsonObject.has(MERCHANT_NAME))
             invoiceRequestBean.setMerchantName(jsonObject.getString(MERCHANT_NAME));
+        if(jsonObject.has(CUST_ID))
+            invoiceRequestBean.setBilltId(jsonObject.getString(CUST_ID));
         if(jsonObject.has(ADDRESS))
             invoiceRequestBean.setAddress(jsonObject.getString(ADDRESS));
-        if(jsonObject.has(PHONE_NO))
-            invoiceRequestBean.setPhoneNo(jsonObject.getString(PHONE_NO));
+        if(jsonObject.has(PHONE_NO_LIST))
+            invoiceRequestBean.setPhoneNoList(jsonObject.getString(PHONE_NO_LIST));
         if(jsonObject.has(TIME))
             invoiceRequestBean.setTime(jsonObject.getString(TIME));
         if(jsonObject.has(DATE))
@@ -156,17 +165,18 @@ public class InvoiceController {
         if(jsonObject.has(GST))
             invoiceRequestBean.setGst(jsonObject.getString(GST));
         if(jsonObject.has(TOTAL_AMT))
-            invoiceRequestBean.setTotalAmt(jsonObject.getString(TOTAL_AMT));
+            invoiceRequestBean.setTotalAmt(Double.parseDouble(jsonObject.getString(TOTAL_AMT)));
         if(jsonObject.has(VAT))
-            invoiceRequestBean.setVat(jsonObject.getString(VAT));
-        if(jsonObject.has(TOTAL_AMT))
-            invoiceRequestBean.setTotalAmt(jsonObject.getString(TOTAL_AMT));
+            invoiceRequestBean.setVat(Double.parseDouble(jsonObject.getString(VAT)));
         if(jsonObject.has(NET))
-            invoiceRequestBean.setNet(jsonObject.getString(NET));
+            invoiceRequestBean.setNet(Double.parseDouble(jsonObject.getString(NET)));
+        if(jsonObject.has(CUSTOMER_EMAIL_TO))
+            invoiceRequestBean.setCustomerEmail(jsonObject.getString(CUSTOMER_EMAIL_TO));
+        if(jsonObject.has(CUSTOMER_MOBILE_NO))
+            invoiceRequestBean.setCustomerMobileNO(jsonObject.getString(CUSTOMER_MOBILE_NO));
 
                 return invoiceRequestBean;
-
-            }
+    }
 
 
 

@@ -7,40 +7,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
           integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
           crossorigin="anonymous"/>
-
-    <style>
-
-        body { background:#fff; font-family:Arial, Helvetica, sans-serif; font-size:12px; line-height:20px;font-weight: bold; }
-        #extra {text-align: right; font-size: 22px;  font-weight: 700}
-        .invoice-wrap { margin:0 auto; background:#FFF; color:#000 }
-        .invoice-inner { margin:0 15px; padding:20px 0 }
-        .invoice-address { border-top: 3px double #000000; margin: 25px 0; padding-top: 25px; }
-        .reset_editor invoice-input mce-content-body {
-            text-align: center; vertical-align: middle;
-        }
-
-
-        .bussines-name { font-size:18px; font-weight:100 }
-        .invoice-name { font-size:22px; font-weight:700 }
-        .listing-table th { background-color: #e5e5e5; border-bottom: 1px solid #555555; border-top: 1px solid #555555; font-weight: bold; text-align:left; padding:6px 4px }
-        .listing-table td { border-bottom: 2px solid #555555; text-align:left; padding:5px 6px; vertical-align:top }
-        .total-table td { border-left: 2px solid #555555; }
-        .total-row { background-color: #e5e5e5; border-bottom: 1px solid #555555; border-top: 1px solid #555555; font-weight: bold; }
-        #items-list {
-
-            border-top: 3px double #000000;
-        }
-        .row-items { margin:5px 0; display:block }
-        .notes-block { margin:50px 0 0 0 }
-        /*tables*/
-        table td { vertical-align:top}
-        .items-table { margin-top: 12px; border-collapse:collapse; width:100%}
-        .items-table td, .items-table th { border:1px solid #555555; padding:4px 5px ; text-align:left}
-        .items-table th { background:#f5f5f5;}
-        .totals-row .wide-cell { border-left:1px solid #fff;border-top:1px solid #fff; border-bottom:1px solid #fff;/*border-right:1px solid #555555;*/ border-top:1px solid #555555}
-        tfoot tr td {border: 7px solid #f4f4f4;}
-
-    </style>
+    <link rel="stylesheet" href="/css/invoice.css"/>
 </head>
 
 
@@ -56,12 +23,10 @@
         <br>
         <ul class="list-group" id="myList" style="display: none;">
             <li th:each="menuItem: ${menuList}" class="list-group-item">
-                <span th:text="${menuItem.name}"></span>
+                <span th:text="${menuItem.name}" class="menu_name"></span>
+                <span th:text="${menuItem.price}" class="menu_price"></span><span class="menu_pricep" style="display:inline">Rs.</span>
+
             </li>
-            <!--     <li class="list-group-item"><span>First item</span></li>
-                 <li class="list-group-item">Second item</li>
-                 <li class="list-group-item">Third item</li>
-                 <li class="list-group-item">Fourth</li>-->
 
         </ul>
     </div>
@@ -81,10 +46,15 @@
                                             <td><div class="reset_editor invoice-input mce-content-body" id="business_info_editor"
                                                      style="text-align: center; vertical-align: middle;" contenteditable="true" spellcheck="false">
                                                 <p style="font-size: 14pt;" data-mce-style="font-size: 14pt;" th:field="*{merchantName}" id="business_name" th:text="${invoice.merchantName}"></p>
+                                                <input type="hidden" th:field="*{merchantName}" th:value="${invoice.merchantName}" >
                                                 <p id="business_address" th:field="*{address}" th:text="${invoice.address}"></p>
+                                                <input type="hidden" th:field="*{address}" th:value="${invoice.address}" >
                                                 <span>Ph No:-</span> <p style="display:inline" id="Phone no" th:field="*{phoneNoList}" th:text="${invoice.phoneNoList}" ></p><br>
+                                                <input type="hidden" th:field="*{phoneNoList}" th:value="${invoice.phoneNoList}" >
                                                 <span>Tin No:-</span><p style="display:inline" id="tin_no" th:field="*{gst}" th:text="${invoice.gst}"></p><br>
+                                                <input type="hidden" th:field="*{gst}" th:value="${invoice.gst}">
                                                 <span>GST No:-</span> <p style="display:inline" id ="gst_no" th:field="*{tinNo}" th:text="${invoice.tinNo}"></p><br>
+                                                <input type="hidden" th:field="*{tinNo}" th:value="${invoice.tinNo}" >
 
                                             </div></td>
                                         </tr>
@@ -114,7 +84,8 @@
 
                                                                 </textarea><div class="reset_editor invoice-input mce-content-body" id="client_info_editor" contenteditable="true"
                                                                                 style="width: 300px; min-height: 80px; position: relative;" spellcheck="false">
-                                                                    <span class ="heading">ORD No: </span> <p style="display:inline" id="ord_no">4171818371</p><br><br>
+                                                                    <span class ="heading">ORD No: </span> <p style="display:inline" th:text="${invoice.orderId}" ></p><br><br>
+                                                                    <input type="hidden" th:field="*{orderId}" th:value="${invoice.orderId}">
                                                                     <span class ="heading">Time: </span><p style="display:inline" id="date_time"></p><br><br>
                                                                 </div></td>
                                                             </tr>
@@ -142,8 +113,8 @@
 
                                                                 </textarea><div class="reset_editor invoice-input mce-content-body" id="client_info_editor_right" contenteditable="true"
                                                                                 style="width: 200px; min-height: 80px; position: relative;" spellcheck="false">
-                                                                    <span class ="heading">Host: </span> <p style="display:inline" id="host">Parth Narang</p><br><br>
-                                                                    <span class ="heading">Table : </span><p style="display:inline" id="table">32</p><br><br>
+                                                                    <span class ="heading">Host: </span> <input type="text" style="display:inline" th:field="*{host}"></input><br><br>
+                                                                    <span class ="heading">Table : </span><input type="text" style="display:inline" th:field="*{tableNo}"></input><br><br>
                                                                 </div></td>
                                                             </tr>
                                                             </tbody>
@@ -174,7 +145,8 @@
                                 <td class="wide-cell" colspan="2"><button type="button" id="AddProduct" class="btn btn-small btn-primary"><i class="fa fa-plus"></i> Add Line</button></td>
                                 <td><strong><span>Sub Total</span></strong>
                                 </td>
-                                <td colspan="2"><span id="subtotal">Rs.&nbsp;85</span>
+                                <td colspan="2">
+                                    <input type="text" id="subtotal" th:field="*{net}" value="0" class="invoice-input" style="font-weight: bold; ">
                                 </td>
                             </tr>
                             <tr class="totals-row" id="discountRow">
@@ -203,38 +175,19 @@
                             <tr class="totals-row" id="total">
                                 <td class="wide-cell" colspan="2"></td>
                                 <td><strong><span>TOTAL</span></strong>
-                                </td><td colspan="2"><input type="text" id="label_total" th:field="*{net}"  value="0" class="invoice-input" style="font-weight: bold;">
+                                </td><td colspan="2"><input type="text" id="label_total" th:field="*{totalAmt}"  value="0" class="invoice-input" style="font-weight: bold;">
                             </td></tr>
 
                             </tfoot>
 
                             <tbody id="ItemsTable">
-                            <tr description="Product XYZ" qty="1" unit_price="10" discount="0" subtotal="10" total="10" class="item-row">
-                                <td><textarea data-key="description" class="editable input-block-level" type="text" th:field="*{invoiceItems[0].DESCRIPTION}" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 40px;" >Product XYZ</textarea></td>
-                                <td><input data-key="qty" class="editable input-mini" value="1" size="3" th:field="*{invoiceItems[0].QUANTITY}" ></td>
-                                <td><input data-key="unit_price" class="editable input-mini" value="5" size="5" ><span style="display:inline"> Rs</span> </td>
-                                <td><input data-key="unit_price" class="editable input-mini" value="5" size="5"><span style="display:inline"> Rs</span></td>
-                                <td><btn href="#" class="btn btn-danger btn-sm remove-item"><i class="fa fa-trash icon-white"></i></btn></td>       </tr>
-
-
-
-
                             </tbody>
-                        </table></div>
-
-                        <!--                    <div class="notes-block">
-                                                <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <textarea id="notes" rows="2" class="invoice-input" style="display: none; overflow: hidden; overflow-wrap: break-word; resize: none; height: 80px;" placeholder="Type your notes here"></textarea><div class="reset_editor invoice-input mce-content-body" id="notes_editor" style="width: 670px; min-height: 80px; position: relative;" contenteditable="true" spellcheck="false"><p><br data-mce-bogus="1"></p></div>
-                                                        </td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>-->
+                        </table>
+                        </div>
                         <br>
 
+                        <span>Customer Ph No: </span><input type="text" th:field="*{customerMobileNO}" class="invoice-input" style="font-weight: bold; "><br><br>
+                        <span>Customer Email: </span><input type="text" th:field="*{customerEmail}" class="invoice-input" style="font-weight: bold; ">
 
                         <button type="submit" class="btn btn-success" style="float: right">Send to Customer</button>
                     </form>

@@ -11,13 +11,15 @@ import com.billt.core.datasourcebase.model.invoiceReceiver.TransactionFlowReques
 import com.billt.core.invoicereceiver.Service.*;
 import com.billt.core.invoicereceiver.enums.ResponseCode;
 import com.billt.core.invoicereceiver.enums.invoiceReceiver.ValidationResults;
-import com.billt.core.notificationservice.Services.EmailSender;
+import com.billt.core.invoicereceiver.Service.EmailSender;
 import com.billt.core.notificationservice.Services.NotificationPush;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 
 
 @Service("invoiceService")
@@ -62,8 +64,8 @@ public class InvoiceServiceImpl implements IInvoiceService {
 
         return ValidationResults.VALIDATION_SUCCESS;
     }
-
-    public ResponseCode processInvoiceRequest(InvoiceRequestBean requestData){
+@Override
+    public ResponseCode processInvoiceRequest(InvoiceRequestBean requestData) throws IOException {
 
         LOG.info("Invoice Request Received for order id : {}", requestData.getOrderId());
 
@@ -88,17 +90,14 @@ public class InvoiceServiceImpl implements IInvoiceService {
                uemail = customer.getEmail();
            }
            if(uemail.compareTo("") != 0){
-               //emailSender.sendSimpleMessage("norirahul@gmail.com","Test mail","Hello this is a test mail for BillT");
-               emailSender.sendSimpleMessage(uemail,"Test mail","Hello this is a test mail for BillT");
+               String subject = "Your Bill for Transaction at " + transactionFlowRequestBean.getMerchantName() +" for Rs." + transactionFlowRequestBean.getTotalAmt();
+               emailSender.sendSimpleMessage(uemail,subject,transactionFlowRequestBean.toString());
            }
 
            saveNewInvoice(transactionFlowRequestBean);
        }
        catch (RequestDataMappingException e){
         return e.getResponseCode();
-       }
-       catch (Exception e){
-   System.out.println("Dd");
        }
        return ResponseCode.TRANSACTION_SUCCESS;
     }

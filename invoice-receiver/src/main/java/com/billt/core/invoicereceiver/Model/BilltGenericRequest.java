@@ -16,7 +16,7 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BillTGenericRequest<R> implements Serializable {
+public class BilltGenericRequest<R> implements Serializable {
     /**
      * Serial version uid
      */
