@@ -4,7 +4,7 @@ import com.billt.core.invoicereceiver.Model.BilltGenericRequest;
 import com.billt.core.invoicereceiver.Model.RegistrationRequestBody;
 import com.billt.core.invoicereceiver.Model.RegistrationRequestHeader;
 import com.billt.core.invoicereceiver.Model.RegistrationRequestPayload;
-import com.billt.core.invoicereceiver.Service.RegistrationService;
+import com.billt.core.invoicereceiver.service.RegistrationService;
 import com.billt.core.invoicereceiver.utils.Response;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;

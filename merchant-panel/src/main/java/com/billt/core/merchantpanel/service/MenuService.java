@@ -92,6 +92,7 @@ public class MenuService {
 
 
         menuItemWriteRepository.save(menuItemEntity1);
+        log.info("inserted successfully");
 
 
     }

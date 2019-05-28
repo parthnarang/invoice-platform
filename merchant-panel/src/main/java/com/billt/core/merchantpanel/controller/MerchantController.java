@@ -96,11 +96,13 @@ public class MerchantController {
     }
 
     @PostMapping("postNewInvoice")
-    public String postInvoice( @ModelAttribute InvoiceBean invoice) {
+    public String  postInvoice( Model model,@ModelAttribute InvoiceBean invoice) {
 
         invoiceService.sendNewInvoice(invoice);
+        model.addAttribute("con", "dashboard");
 
-        return "redirect:/panel/home";
+
+        return "layout";
     }
 
     @GetMapping("/downloadFile/{fileName:.+}")

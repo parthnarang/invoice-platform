@@ -5,11 +5,11 @@
     <parent>
         <groupId>com.billt.core</groupId>
         <artifactId>invoice-platform</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
     <groupId>com.billt.core</groupId>
     <artifactId>notification-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
     <name>notification-service</name>
     <description>sending notifications and other messeges to clients</description>
@@ -91,7 +91,21 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>spring-boot</classifier>
+                            <mainClass>
+                                org.baeldung.executable.ExecutableMavenJar
+                            </mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
+
         </plugins>
     </build>
 
