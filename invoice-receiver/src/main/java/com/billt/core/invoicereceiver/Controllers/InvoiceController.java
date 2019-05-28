@@ -4,7 +4,7 @@ package com.billt.core.invoicereceiver.Controllers;
 import com.billt.core.datasourcebase.model.ItemListWrapper;
 import com.billt.core.datasourcebase.model.invoiceReceiver.InvoiceItem;
 import com.billt.core.invoicereceiver.Model.InvoiceRequestBean;
-import com.billt.core.invoicereceiver.Service.IInvoiceService;
+import com.billt.core.invoicereceiver.service.IInvoiceService;
 import com.billt.core.invoicereceiver.enums.ResponseCode;
 import com.billt.core.invoicereceiver.enums.invoiceReceiver.ValidationResults;
 import org.json.JSONException;
@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,12 +41,12 @@ public class InvoiceController {
 
     @PostMapping(value = "processInvoice",consumes = "application/json")
     public void processInvoice(final HttpServletRequest request, final HttpServletResponse response,
-                               final Model model, @RequestParam("MID") String merchantId) throws IOException, ServletException {
+                               final Model model) throws IOException, ServletException {
 
         final long startTime = System.currentTimeMillis();
         try {
 
-            LOG.debug("Invoice Request Received for merchantId : {}", merchantId);
+            LOG.debug("Invoice Request Received");
             JSONObject jsonRequest = mapToJson(request);
             LOG.info("request received = {}",jsonRequest);
             InvoiceRequestBean invoiceRequestBean = mapToInvoiceRequestBean(jsonRequest);
@@ -70,7 +69,7 @@ public class InvoiceController {
                                 InvoiceRequestBean invoiceRequestData, final Model model) throws IOException, ServletException {
 
         ResponseCode customResponse = processInvoiceRequest(invoiceRequestData);
-/*        Assert.notNull(customResponse, "Service page response received was null");*/
+/*        Assert.notNull(customResponse, "service page response received was null");*/
 
 
         response.getWriter().print(new JSONObject(customResponse));

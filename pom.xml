@@ -5,7 +5,7 @@
 
 	<groupId>com.billt.core</groupId>
 	<artifactId>invoice-platform</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0</version>
 	<packaging>pom</packaging>
 	<name>invoice-platform</name>
 	<description>Cloud Platform for Storing and Retrieving Invoices</description>
@@ -22,10 +22,10 @@
 	</properties>
 
     <modules>
-        <module>invoice-receiver</module>
-        <module>notification-service</module>
 		<module>datasource-base</module>
+		<module>notification-service</module>
 		<module>merchant-panel</module>
+        <module>invoice-receiver</module>
     </modules>
 
 	<dependencies>

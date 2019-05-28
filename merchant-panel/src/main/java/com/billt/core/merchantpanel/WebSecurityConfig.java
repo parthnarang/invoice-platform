@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -20,20 +21,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Qualifier(value="userDetailService")
   private UserDetailsService userDetailsService;
 
+  private AuthenticationSuccessHandler authenticationSuccessHandler;
+
   @Bean
   public BCryptPasswordEncoder bCryptPasswordEncoder() {
     return new BCryptPasswordEncoder();
+  }
+
+  @Autowired
+  public WebSecurityConfig(AuthenticationSuccessHandler authenticationSuccessHandler) {
+    this.authenticationSuccessHandler = authenticationSuccessHandler;
   }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
             .authorizeRequests()
-            .antMatchers("/resources/**", "/panel/registration","/css/**","/js/**","/vendor/**").permitAll()
+            .antMatchers("/resources/**", "/panel/registration","/css/**","/js/**","/vendor/**","/img/**").permitAll()
             .anyRequest().authenticated()
             .and()
             .formLogin()
             .loginPage("/panel/login")
+            .successHandler(authenticationSuccessHandler)
             .permitAll()
             .and()
             .logout()

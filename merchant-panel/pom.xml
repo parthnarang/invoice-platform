@@ -5,13 +5,13 @@
     <parent>
         <groupId>com.billt.core</groupId>
         <artifactId>invoice-platform</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0</version>
         <relativePath>../</relativePath>
     </parent>
 
     <groupId>com.billt.core</groupId>
     <artifactId>merchant-panel</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
     <name>merchant-panel</name>
     <description>merchant panel for billt</description>
@@ -84,7 +84,7 @@
         <dependency>
             <groupId>com.billt.core</groupId>
             <artifactId>datasource-base</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

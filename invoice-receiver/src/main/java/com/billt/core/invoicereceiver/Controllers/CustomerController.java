@@ -5,7 +5,7 @@ import com.billt.core.datasourcebase.entities.jpa.Customer;
 import com.billt.core.datasourcebase.entities.jpa.Merchant;
 import com.billt.core.datasourcebase.repositories.mongo.read.InvoiceReadRepository;
 import com.billt.core.invoicereceiver.Model.*;
-import com.billt.core.invoicereceiver.Service.ICustomerService;
+import com.billt.core.invoicereceiver.service.ICustomerService;
 import com.billt.core.datasourcebase.services.MerchantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

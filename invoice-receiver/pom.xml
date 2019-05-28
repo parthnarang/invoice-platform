@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.billt.core</groupId>
         <artifactId>invoice-platform</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0</version>
         <relativePath>../</relativePath>
     </parent>
     <artifactId>invoice-receiver</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <version>1.0</version>
+    <packaging>jar</packaging>
     <name>invoice-receiver</name>
     <description>provides Api for vendors to send invoice data</description>
 
@@ -72,7 +72,7 @@
         <dependency>
             <groupId>com.billt.core</groupId>
             <artifactId>datasource-base</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>

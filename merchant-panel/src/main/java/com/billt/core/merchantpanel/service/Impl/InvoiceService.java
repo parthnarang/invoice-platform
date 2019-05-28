@@ -84,27 +84,31 @@ public class InvoiceService {
 
     public void sendNewInvoice(InvoiceBean invoiceBean){
 
-        Merchant merchant = merchantReadRepository.findById(findLoggedInMerchant().getId());
 
-        invoiceBean.setMid(merchant.getMid());
-        invoiceBean.setNet(10.0);
-
-        log.info(""+invoiceBean);
-        URI uri=null;
-
-        RestTemplate restTemplate = new RestTemplate();
-        final String baseUrl = "http://localhost:8080/invoicereceiver/processInvoice?MID="+merchant.getMid();
         try {
+            Merchant merchant = merchantReadRepository.findById(findLoggedInMerchant().getId());
+            invoiceBean.setMid(merchant.getMid());
+            invoiceBean.setNet(10.0);
+
+            log.info("invoiceBean = {}",invoiceBean);
+
+            log.info(""+invoiceBean);
+            URI uri=null;
+
+            RestTemplate restTemplate = new RestTemplate();
+            final String baseUrl = "http://localhost:5000/invoicereceiver/processInvoice";
+            log.info(baseUrl);
+
             uri = new URI(baseUrl);
-        } catch (Exception exception){
 
+
+            HttpHeaders headers = new HttpHeaders();
+
+            HttpEntity<InvoiceBean> request = new HttpEntity<>(invoiceBean, headers);
+
+            ResponseEntity<String> result = restTemplate.postForEntity(uri, request, String.class);   }
+        catch (Exception exception){
+            log.info(exception.toString());
         }
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("X-COM-PERSIST", "true");
-
-        HttpEntity<InvoiceBean> request = new HttpEntity<>(invoiceBean, headers);
-
-        ResponseEntity<String> result = restTemplate.postForEntity(uri, request, String.class);
     }
 }

@@ -1,8 +1,6 @@
 package com.billt.core.notificationservice.Helpers;
 
-import com.billt.core.datasourcebase.entities.jpa.Customer;
 import com.billt.core.datasourcebase.model.invoiceReceiver.TransactionFlowRequestBean;
-import com.billt.core.datasourcebase.repositories.jpa.read.CustomerReadRepository;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,7 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.constants.CommunicationConstants.*;
+import static com.billt.core.notificationservice.constants.CommunicationConstants.*;
 
 
 @Service
