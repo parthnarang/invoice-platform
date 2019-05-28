@@ -10,4 +10,8 @@ public interface DashboardService {
     double getMerchantTotalAmount(String mid, String id);
 
     int getMerchantInvoiceCount(String mid, String id);
+
+    List<Double> getMerchantRevenue(String mid, String id);
+
+    List<Integer> getMerchantTotalTransactions(String mid, String id);
 }

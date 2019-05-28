@@ -1,1 +1,40 @@
-<h1>dash board content </h1>
+<!--h1>dash board content </h1-->
+
+<html>
+<head>
+    <title>World population</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/scriptDashboard/style.css">
+</head>
+<body>
+
+<div class="row-line">
+    <div class="card-part1">
+            <h5 class="card-title">Total Transactions</h5>
+            <h3 id="total-transactions"></h3>
+        </div>
+
+        <div class="card-part2">
+            <h5 class="card-title">Total Revenue Generated</h5>
+            <h3 id="total-revenue"></h3>
+        </div>
+</div>
+<div class="wrapper-div-pt1">
+    <canvas id="txn-amt" class="Txn"></canvas>
+</div>
+<div class="wrapper-div-pt2">
+    <canvas id="txn-cnt" class="Txn"></canvas>
+</div>
+
+
+<script>
+    var invoiceListSize = [[${invoiceListSize}]];
+    var totalAmount = [[${totalAmount}]];
+    var totalAmountList = [[${totalAmountList}]];
+    var totalTransactionList = [[${totalTransactionList}]];
+</script>
+
+
+<script src="/scriptDashboard/script.js"></script>
+</body>
+</html>

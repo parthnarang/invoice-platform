@@ -13,4 +13,5 @@ public interface InvoiceReadRepository extends MongoRepository<Invoice,String> {
     public List<Invoice> findByCid(String cid);
     public Invoice findByTransID(String transID);
     public List<Invoice> findByDateBetweenAndMid(Date from, Date to, String mid);
+    public List<Invoice> findByMidAndDate(String mid, Date date);
 }
