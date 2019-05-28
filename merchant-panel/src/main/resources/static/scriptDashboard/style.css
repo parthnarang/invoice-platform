@@ -1,0 +1,41 @@
+.row-line{
+    max-width: 600px;
+    margin: 5px auto;
+}
+.card-part1 {
+    border-color: #3cbc4c;
+    display: inline-block;
+    border: 3px solid #3cbc4c;
+    width: 170px;
+    /* margin: 5px auto; */
+    height: 90px;
+    padding: 5px;
+    text-align: center;
+}
+
+.card-part2{
+    border-color: #000000;
+    float: right;
+    max-width: 300px;
+    text-align: center;
+    border-color: #3cbc4c;
+    border: 3px solid #3cbc4c;
+    width: 170px;
+    /* margin: 5px auto; */
+    height: 90px;
+    padding: 5px;
+}
+.wrapper-div-pt1 {
+    display: inline-block;
+    max-width: 600px;
+    margin: 50px auto;
+}
+.wrapper-div-pt2 {
+    float: right;
+    max-width: 600px;
+    margin: 50px auto;
+}
+.Txn{
+    height: 300px;
+    width: 400px;
+}
